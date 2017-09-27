@@ -3,19 +3,19 @@
 
 using namespace std;
 
-/// Суммирование всех возможных делителей числа (не равных самому числу)
+/// Sum of dividers of number
 int decomposition (int x)
 {
-    int i; /// счетчик (1 - делитель любого числа => начинаем с 2)
-    int sum = 1; /// сумма делителей
-    int sqrtX = sqrt(x); /// корень квадратный из х
-    /// Нахождение делителей числа и их суммы
+    int i; /// counter
+    int sum = 1; /// sum of dividers
+    int sqrtX = sqrt(x); /// square root of x
+    /// Search of dividers and calculation
     for (i = 2; i <= sqrtX; i++)
         if (x % i == 0)
             sum += i + x/i;
     return sum;
 }
-/// Нахождение НОД (наибольшего общего делителя)
+/// Definition of the greatest common divisor
 int gcd (int a, int b)
 {
 	if (b == 0)
@@ -23,12 +23,12 @@ int gcd (int a, int b)
 	else
 		return gcd (b, a % b);
 }
-/// Подсчет количества различных цифр в числе
+/// Number of various digits
 int function_1 (int N)
 {
-    int number = 0; /// количество различных цифр в числе
-    bool digits[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; /// массив флагов цифр
-    /// Обработка входных данных
+    int number = 0; /// number of various digits
+    bool digits[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}; /// array of flags
+    /// Processing
     while (N > 0)
     {
         if (!digits[N % 10])
@@ -40,22 +40,22 @@ int function_1 (int N)
     }
     return number;
 }
-/// Поиск автоморфных чисел меньших заданного числа
+/// Search of automorphic numbers
 void function_2 (int N)
 {
-    int i; /// счетчик
-    int i2; /// квадрат счетчика
-    int coefficient; /// коэффициент разряда числа
-    int  sum; /// сумма разрядных слагаемых
-    /// 0 - автоморфное число, меньшее любого натурального
+    int i; /// counter
+    int i2; /// counter^2
+    int coefficient; /// coefficient of power
+    int  sum; /// sum
+    /// 0 - automorphic number, 0 < 1, 2, ..., n = N
     cout << "0 ";
-    /// Проверка на автоморфность всех натуральных чисел до N
+    /// Check
     for (i = 1; i < N; i++)
     {
         i2 = i * i;
         sum = 0;
         coefficient = 1;
-        /// Суммирование разрядных слагаемых квадрата счетчика
+        /// Sum and check
         while (i2 > 0)
         {
             sum += coefficient * (i2 % 10);
@@ -70,13 +70,13 @@ void function_2 (int N)
     }
     cout << endl;
 }
-/// Поиск всех несократимых дробей, знаменатель которых меньше заданного числа
+/// Search of nonreducible fractions, denominator < N
 void function_3 (int N)
 {
-    int numerator; /// числитель
-    int denominator; /// знаменатель
-    int number = 0; /// количество искомых дробей
-    /// Перебор возможных вариантов
+    int numerator; /// numerator
+    int denominator; /// denominator
+    int number = 0; /// number of nonreducible fractions
+    /// Search
     for (denominator = 2; denominator < N; denominator++)
     {
         for (numerator = 1; numerator < denominator; numerator++)
@@ -92,12 +92,12 @@ void function_3 (int N)
         cout << endl;
     else cout << "Not found" << endl;
 }
-/// Поиск совершенных чисел, меньших заданного числа
+/// Search of perfect numbers
 void function_4 (int N)
 {
-    int i; /// счетчик
-    int number = 0; /// количество искомых чисел
-    /// Перебор возможных вариантов
+    int i; /// counter
+    int number = 0; /// number of perfect numbers
+    /// Search
     for (i = 2; i < N; i++)
         if (i == decomposition(i))
         {
@@ -108,7 +108,7 @@ void function_4 (int N)
         cout << endl;
     else cout << "Not found" << endl;
 }
-
+/// Is this date correct or incorrect?
 bool function_5 (int day, int month, int year)
 {
     if (year < 1)
@@ -164,27 +164,27 @@ bool function_5 (int day, int month, int year)
 }
 int main3()
 {
-    int number = 0; /// номер задачи
+    int number = 0; /// number of task
     cout << "Please, enter the number of task ( 1, 2, 3, 4, 5 )" << endl;
     cout << "1. N : number of various digits?" << endl;
-    cout << "2. N : all automorphic number < N" << endl;
+    cout << "2. N : all automorphic numbers < N" << endl;
     cout << "3. N : all nonreducible fractions, denominator < N" << endl;
     cout << "4. N : all perfect numbers < N" << endl;
     cout << "5. Input: date of birth, current date. Output: number of lived days, 1(number of lived days), 2(number of lived days), 4 (number of lived days)" << endl;
-    /// Ввод номера задачи
+    /// Input
     while (number == 0)
     {
         cin >> number;
         if (number < 1 || number > 5)
             number = 0;
     }
-    /// Выбор задачи в соответствии со введенным номером
+
     switch (number)
     {
         case 1:
         {
-            int N = 0; /// входное число
-            /// Ввод входного числа
+            int N = 0; /// input date
+            /// Input
             while (N == 0)
             {
                 cout << "N = ";
@@ -192,14 +192,14 @@ int main3()
                 if (N < 1)
                     N = 0;
             }
-            /// Вывод результата
+            /// Processing and output
             cout << function_1(N) << endl;
             break;
         }
         case 2:
         {
-            int N = 0; /// входное число
-            /// Ввод входного числа
+            int N = 0; /// input date
+            /// Input
             while (N == 0)
             {
                 cout << "N = ";
@@ -207,14 +207,14 @@ int main3()
                 if (N < 1 || N > 46340)
                     N = 0;
             }
-            /// Вывод результата через функцию обработки
+            /// Processing and output
             function_2(N);
             break;
         }
         case 3:
         {
-            int N = 0; /// входное число
-            /// Ввод входного числа
+            int N = 0; /// input date
+            /// Input
             while (N == 0)
             {
                 cout << "N = ";
@@ -222,14 +222,14 @@ int main3()
                 if (N < 1)
                     N = 0;
             }
-            /// Вывод результата через функцию обработки
+            /// Processing and output
             function_3(N);
             break;
         }
         case 4:
         {
-            int N = 0; /// входное число
-            /// Ввод входного числа
+            int N = 0; /// input date
+            /// Input
             while (N == 0)
             {
                 cout << "N = ";
@@ -237,27 +237,27 @@ int main3()
                 if (N < 1 || N > 1000000)
                     N = 0;
             }
-            /// Вывод результата через функцию обработки
+            /// Processing and output
             function_4(N);
             break;
         }
         case 5:
         {
-            int d1; /// день рождения
-            int d2; /// текущий день
-            int m1; /// месяц рождения
-            int m2; /// текущий месяц
-            int y1; /// год рождения
-            int y2; /// текущий год
+            int d1; /// day of birth
+            int d2; /// current day
+            int m1; /// month of birth
+            int m2; /// current month
+            int y1; /// year of birth
+            int y2; /// current year
 
-            int month1[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; /// распределение дней по месяцам в невисокосном году
-            int month2[12] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; /// распределение дней по месяцам в високосном году
+            int month1[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; /// for not leap year
+            int month2[12] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; /// for leap year
 
-            int i; /// счетчик
-            int subproduct1 = 0; /// количество дней, прошедших в году рождения
-            int subproduct2 = 0; /// количество дней, прошедших в текущем году
-            int result = 0; /// количество прожитых дней
-            /// Ввод данных и проверка их корректности
+            int i; /// counter
+            int subproduct1 = 0; /// number of days which have passed in year of birth
+            int subproduct2 = 0; /// number of days which have passed in current year
+            int result = 0; /// number of lived days
+            /// Input and check
             cout << "Please, enter the date of birth" << endl;
             cin >> d1 >> m1 >> y1;
 
@@ -269,7 +269,7 @@ int main3()
 
             while (!function_5(d2, m2, y2))
                 cin >> d2 >> m2 >> y2;
-            /// Подсчет количества дней, прошедших в году рождения
+            /// How many days do have passed in year of birth?
             if (y1 % 4 != 0 || (y1 % 100 == 0 && y1 % 400 != 0))
                 for (i = 0; i < m1-1; i++)
                     subproduct1+= month1[i];
@@ -277,7 +277,7 @@ int main3()
                 for (i = 0; i < m1-1; i++)
                     subproduct1 += month2[i];
             subproduct1 += d1;
-            /// Подсчет количества дней, прошедших в текущем году
+            /// How many days do have passed in current year?
             if (y2 % 4 != 0 || (y1 % 100 == 0 && y1 % 400 != 0))
                 for (i = 0; i < m2-1; i++)
                     subproduct2 += month1[i];
@@ -285,14 +285,14 @@ int main3()
                 for (i = 0; i < m2-1; i++)
                     subproduct2 += month2[i];
             subproduct2 += d2;
-            /// Подсчет количества дней в промежуточных годах
+            /// Sum of days in intermediate years
             for (i = y1 + 1; i < y2; i++)
             {
                 if (i % 4 != 0)
                     result += 365;
                 else result += 366;
             }
-            /// Получение результата в зависимости от входных данных
+            /// Processing
             if (y1 == y2)
                 result += subproduct2 - subproduct1;
             else
@@ -303,9 +303,9 @@ int main3()
                     subproduct1 = 366 - subproduct1;
                 result += subproduct1 + subproduct2;
             }
-            /// Вывод результа
+            /// Output
             cout << result << endl;
-            /// Вывод результатов обработки полученных данных функциями 1, 2 и 4
+            /// Processing and output
             cout << "1) " << function_1(result) << endl;
             cout << "2) ";
             if (result <= 46340)
