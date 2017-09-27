@@ -269,7 +269,7 @@ int main3()
 
             while (!function_5(d2, m2, y2))
                 cin >> d2 >> m2 >> y2;
-            /// How many days do have passed in year of birth?
+            /// The number of days from the begin of year of birth
             if (y1 % 4 != 0 || (y1 % 100 == 0 && y1 % 400 != 0))
                 for (i = 0; i < m1-1; i++)
                     subproduct1+= month1[i];
@@ -277,7 +277,7 @@ int main3()
                 for (i = 0; i < m1-1; i++)
                     subproduct1 += month2[i];
             subproduct1 += d1;
-            /// How many days do have passed in current year?
+            /// The number of days from the begin of current year
             if (y2 % 4 != 0 || (y1 % 100 == 0 && y1 % 400 != 0))
                 for (i = 0; i < m2-1; i++)
                     subproduct2 += month1[i];
