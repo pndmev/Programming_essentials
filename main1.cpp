@@ -7,26 +7,26 @@ const float PI = 3.14;
 
 int main1()
 {
-	int number = 0; /// номер задачи
+	int number = 0; /// number of task
 	cout << "Please, enter the number of task ( 1, 2, 3 )" << endl;
 	cout << "1. Square in circle/circle in square" << endl;
 	cout << "2. ax^2 + bx + c = 0 : x1,2 = ?" << endl;
 	cout << "3. max_even(a1, a2, ..., an) = ?" << endl;
-	/// Ввод номера задачи
+	/// Input
 	while (number == 0)
 	{
 		cin >> number;
 		if (number < 1 || number > 3)
 			number = 0;
 	}
-	/// Выбор задачи в соответствии со введенным номером
+	
 	switch (number)
 	{
         case 1:
         {
-            double sSquare = 0; /// площадь квадрата
-            double sCircle = 0; /// площадь круга
-            /// Ввод данных
+            double sSquare = 0; /// square of square
+            double sCircle = 0; /// square of circle
+            /// Input
             while (1)
             {
                 cout << "Please, enter the square of a square" << endl;
@@ -43,12 +43,12 @@ int main1()
                     break;
                 else cout << "Square > 0" << endl;
             }
-            double r2 = sCircle / PI; /// квадрат радиуса
-            /// Проверка: уместится ли квадрат в круге?
+            double r2 = sCircle / PI; /// radius^2
+            /// Check
             if (sSquare <= 2 * r2)
                 cout << "a) YES" << endl;
             else cout << "a) NO" << endl;
-            /// Проверка: уместится ли круг в квадрате?
+
             if (sSquare >= 4 * r2)
                 cout << "b) YES" << endl;
             else cout << "b) NO" << endl;
@@ -56,10 +56,10 @@ int main1()
         }
         case 2:
         {
-            double a; /// старший коэффициент
-            double b; /// средний коэфициент
-            double c; /// свободный член
-            /// Ввод данных
+            double a; /// quadratic coefficient
+            double b; /// linear coefficient
+            double c; /// constant
+            /// Input
             cout << "ax^2 + bx + c = 0" << endl;
             cout << "a = ";
             cin >> a;
@@ -67,7 +67,7 @@ int main1()
             cin >> b;
             cout << "c = ";
             cin >> c;
-            /// Рассмотрение случаев линейного уравнения
+            /// If simple equation
             if (a == 0)
             {
                 if (b != 0)
@@ -76,9 +76,9 @@ int main1()
                     if (c == 0)
                         cout << "x = R" << endl;
                     else
-                        cout << "There aren't solutions of an equation" << endl;
+                        cout << "There aren't solutions of equation" << endl;
             }
-            /// Рассмотрение случаев квадратного уравнения
+            /// If quadratic equation
             else
             {
                 double d = b * b - 4 * a * c;
@@ -101,10 +101,10 @@ int main1()
         case 3:
         {
             cout << "Please, enter integers. If you want to finish input, enter 0" << endl;
-            int max = -1; /// максимальное значение
-            int x; /// переменная
-            bool flag; /// флаг
-            /// Ввод данных и их обработка
+            int max = -1; /// peak value
+            int x; /// variable
+            bool flag; /// flag
+            /// Input and processing
             cin >> x;
             while (x != 0)
             {
