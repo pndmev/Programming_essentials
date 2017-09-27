@@ -5,28 +5,28 @@ using namespace std;
 
 int main2()
 {
-    int number = 0; /// номер задачи
+    int number = 0; /// number of task
     cout << "Please, enter the number of task ( 1, 2, 3, 4, 5 )" << endl;
     cout << "1. n = 2^x ?" << endl;
     cout << "2. x * 1.1n >= y : n = ?" << endl;
     cout << "3. n = ab..z : a + b + ... + z = ?" << endl;
     cout << "4. 1/0! + 1/1! + ... + 1/n! = ?" << endl;
     cout << "5. Input: current date. Output: tomorrow's date." << endl;
-    /// Ввод номера задачи
+    /// Input
     while (number == 0)
     {
         cin >> number;
         if (number < 1 || number > 5)
             number = 0;
     }
-    /// Выбор задачи в соответствии со введенным номером
+
     switch (number)
     {
         case 1:
         {
-            int n = 0; /// входное число
-            bool even = true; /// флаг четности
-            /// Ввод входного числа
+            int n = 0; /// input data
+            bool even = true; /// flag
+            /// Input
             while (n == 0)
             {
                 cout << "n = ";
@@ -34,7 +34,7 @@ int main2()
                 if (n < 1)
                     n = 0;
             }
-            /// Проверка: является ли число степенью 2?
+            /// Is n power of 2?
             while (n > 1)
             {
                 if (n % 2)
@@ -44,7 +44,7 @@ int main2()
                 }
                 n /= 2;
             }
-            /// Вывод результата
+            /// Output
             if (even)
                 cout << "YES" << endl;
             else
@@ -53,10 +53,10 @@ int main2()
         }
         case 2:
         {
-            double x = 0; /// начальное значение пробега
-            double y = 0; /// желаемое значение пробега
-            double n = 1; /// номер дня, в который был достигнут желаемый пробег
-            /// Ввод данных
+            double x = 0; /// starting value
+            double y = 0; /// finite value
+            double n = 1; /// number of day
+            /// Input
             while (x == 0)
             {
                 cout << "x = ";
@@ -71,7 +71,7 @@ int main2()
                 if (y <= 0)
                     y = 0;
             }
-            /// Проведение вычислений (если x >= y, желаемый пробег достигнут в 1 день)
+            /// Processing
             if (x < y)
                 n = int(log(y / x) / log(1.1)) + 2;
             cout << n << endl;
@@ -79,9 +79,9 @@ int main2()
         }
         case 3:
         {
-            int n = 0; /// входное число
-            int sum = 0; /// сумма цифр числа
-            /// Ввод входного числа
+            int n = 0; /// input data
+            int sum = 0; /// sum of digits of number
+            /// Input
             while (n == 0)
             {
                 cout << "n = ";
@@ -89,7 +89,7 @@ int main2()
                 if (n < 1)
                     n = 0;
             }
-            /// Обработка числа с вычислением суммы его цифр
+            /// Processing
             while (n > 0)
             {
                 sum += n % 10;
@@ -100,11 +100,11 @@ int main2()
         }
         case 4:
         {
-            int i = 1; /// счетчик последовательности
-            int factorial = 1; /// текущее значение факториала
-            int n = -1; /// входное число
-            double sum = 1; /// значение суммы последовательности
-            /// Ввод входного числа
+            int i = 1; /// counter
+            int factorial = 1; /// current value of factorial
+            int n = -1; /// input data
+            double sum = 1; /// sum of sequence
+            /// Input
             while (n == -1)
             {
                 cout << "n = ";
@@ -114,7 +114,7 @@ int main2()
                 if (n == -1)
                     cout << "n = [0 , 12]" << endl;
             }
-            /// Вычисления
+            /// Processing
             while (i <= n)
             {
                 sum += 1./factorial;
@@ -126,10 +126,10 @@ int main2()
         }
         case 5:
         {
-            int day = 0; /// день
-            int month = 0; /// месяц
-            int year = 0; /// год
-            /// Ввод данных
+            int day = 0; /// day
+            int month = 0; /// month
+            int year = 0; /// year
+            /// Input
             cout << "Please, enter the date" << endl;
             cin >> day >> month >> year;
             if (year < 1)
@@ -137,7 +137,7 @@ int main2()
                 cout << "Incorrect date" << endl;
                 return 1;
             }
-            /// Обработка данных в зависимости от месяца
+            /// Check and processing
             switch (month)
             {
                 case 1:
@@ -214,7 +214,7 @@ int main2()
                 month = 1;
                 year += 1;
             }
-            /// Вывод в стандартном виде даты
+            /// Output
             if (day < 10)
                 cout << "0" << day << ".";
             else
