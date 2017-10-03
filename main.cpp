@@ -9,9 +9,9 @@ using namespace std;
 int main()
 {
     int number;
-    cout << "Please, enter the number of laboratory work (1 - 3)" << endl;
+    cout << "Please, enter the number of laboratory work (1 - 4)" << endl;
     cin >> number;
-    while (number < 1 || number > 3)
+    while (number < 1 || number > 4)
     {
         cout << "Incorrect number" << endl;
         cin >> number;
@@ -31,6 +31,11 @@ int main()
         case 3:
         {
             main3();
+            break;
+        }
+        case 4:
+        {
+            main4();
             break;
         }
     }
