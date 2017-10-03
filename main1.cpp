@@ -3,8 +3,6 @@
 
 using namespace std;
 
-const float PI = 3.14;
-
 int main1()
 {
 	int number = 0; /// number of task
@@ -19,7 +17,7 @@ int main1()
 		if (number < 1 || number > 3)
 			number = 0;
 	}
-	
+
 	switch (number)
 	{
         case 1:
@@ -43,15 +41,15 @@ int main1()
                     break;
                 else cout << "Square > 0" << endl;
             }
-            double r2 = sCircle / PI; /// radius^2
+            double r2 = sCircle / M_PI; /// radius^2
             /// Check
             if (sSquare <= 2 * r2)
-                cout << "a) YES" << endl;
-            else cout << "a) NO" << endl;
+                cout << "a) Square in circle: YES" << endl;
+            else cout << "a) Square in circle: NO" << endl;
 
             if (sSquare >= 4 * r2)
-                cout << "b) YES" << endl;
-            else cout << "b) NO" << endl;
+                cout << "b) Circle in square: YES" << endl;
+            else cout << "b) Circle in square: NO" << endl;
             break;
         }
         case 2:
@@ -89,9 +87,9 @@ int main1()
                     x1 = (-1 * b + sqrt(d)) / (2 * a);
                     x2 = (-1 * b - sqrt(d)) / (2 * a);
                     if (x1 == x2)
-                        cout << x1;
+                        cout << "x = " << x1;
                     else
-                        cout << x1 << " " << x2;
+                        cout << "x1 = "<< x1 << "; x2 = " << x2;
                 }
                 else
                     cout << "There aren't solutions of an equation" << endl;
@@ -100,13 +98,13 @@ int main1()
         }
         case 3:
         {
-            cout << "Please, enter integers. If you want to finish input, enter 0" << endl;
+            cout << "Please, enter integers. If you want to finish input, enter -1" << endl;
             int max = -1; /// peak value
             int x; /// variable
             bool flag; /// flag
             /// Input and processing
             cin >> x;
-            while (x != 0)
+            while (x != -1)
             {
                 flag = !(x % 2);
                 if (flag && ((max != -1 && x > max) || (max == -1)))
@@ -116,7 +114,7 @@ int main1()
             if (max == -1)
                 cout << "Not found" << endl;
             else
-                cout << max << endl;
+                cout << "Max_even = " << max << endl;
             break;
         }
 	}
