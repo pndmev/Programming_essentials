@@ -41,7 +41,7 @@ int main1()
                     break;
                 else cout << "Square > 0" << endl;
             }
-            double r2 = sCircle / M_PI; /// radius^2
+            float r2 = sCircle / M_PI; /// radius^2
             /// Check
             if (sSquare <= 2 * r2)
                 cout << "a) Square in circle: YES" << endl;
