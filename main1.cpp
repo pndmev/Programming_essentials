@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int main1()
+int main()
 {
 	int number = 0; /// number of task
 	cout << "Please, enter the number of task ( 1, 2, 3 )" << endl;
@@ -65,19 +65,8 @@ int main1()
             cin >> b;
             cout << "c = ";
             cin >> c;
-            /// If simple equation
-            if (a == 0)
-            {
-                if (b != 0)
-                    cout << (-1 * c) / b;
-                else
-                    if (c == 0)
-                        cout << "x = R" << endl;
-                    else
-                        cout << "There aren't solutions of equation" << endl;
-            }
             /// If quadratic equation
-            else
+            if (a == 0)
             {
                 double d = b * b - 4 * a * c;
                 if (d >= 0)
@@ -94,22 +83,39 @@ int main1()
                 else
                     cout << "There aren't solutions of an equation" << endl;
             }
+            /// If simple equation
+            else
+            {
+                if (b != 0)
+                    cout << (-1 * c) / b;
+                else
+                    if (c == 0)
+                        cout << "x = R" << endl;
+                    else
+                        cout << "There aren't solutions of equation" << endl;
+            }
+
             break;
         }
         case 3:
         {
-            cout << "Please, enter integers. If you want to finish input, enter -1" << endl;
+            cout << "Please, enter integers" << endl;
             int max = -1; /// peak value
             int x; /// variable
-            bool flag; /// flag
             /// Input and processing
+            string answer;
             cin >> x;
-            while (x != -1)
+            if (!(x % 2) && ((max != -1 && x > max) || (max == -1)))
+                max = x;
+            cout << "If you want to finish input, enter EXIT. Else enter any symbol" << endl;
+            cin >> answer;
+            while (answer != "EXIT")
             {
-                flag = !(x % 2);
-                if (flag && ((max != -1 && x > max) || (max == -1)))
-                    max = x;
                 cin >> x;
+                if (!(x % 2) && ((max != -1 && x > max) || (max == -1)))
+                    max = x;
+                cout << "If you want to finish input, enter EXIT. Else enter any symbol" << endl;
+                cin >> answer;
             }
             if (max == -1)
                 cout << "Not found" << endl;
