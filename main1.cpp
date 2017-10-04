@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int main()
+int main1()
 {
 	int number = 0; /// number of task
 	cout << "Please, enter the number of task ( 1, 2, 3 )" << endl;
