@@ -1,8 +1,9 @@
 #include <iostream>
 
-#include "main1.cpp"
-#include "main2.cpp"
-#include "main3.cpp"
+#include "N_1_PonyavinD.cpp"
+#include "N_2_PonyavinD.cpp"
+#include "N_3_PonyavinD.cpp"
+#include "N_4_PonyavinD.cpp"
 
 using namespace std;
 
