@@ -111,9 +111,8 @@ void function_4 (int N)
 /// Is this date correct or incorrect?
 bool function_5 (int day, int month, int year)
 {
-    if (year < 1)
+    if (year < 1 || day < 1)
     {
-        cout << "Incorrect date" << endl;
         return 0;
     }
     switch (month)
@@ -128,7 +127,6 @@ bool function_5 (int day, int month, int year)
             {
                 if (day > 31)
                 {
-                    cout << "Incorrect date" << endl;
                     return 0;
                 }
                 break;
@@ -140,7 +138,6 @@ bool function_5 (int day, int month, int year)
             {
                 if (day > 30)
                 {
-                    cout << "Incorrect date" << endl;
                     return 0;
                 }
                 break;
@@ -149,14 +146,12 @@ bool function_5 (int day, int month, int year)
             {
                 if ((day > 28 && (year % 4 != 0 || (year % 100 == 0 && year % 400 != 0))) || (day > 29 && year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)))
                 {
-                    cout << "Incorrect date" << endl;
                     return 0;
                 }
                 break;
             }
         default:
         {
-            cout << "Incorrect date" << endl;
             return 0;
         }
     }
@@ -265,13 +260,19 @@ int main3()
             cin >> d1 >> m1 >> y1;
 
             while (!function_5(d1, m1, y1))
+            {
+                cout << "Incorrect date" << endl;
                 cin >> d1 >> m1 >> y1;
+            }
 
             cout << "Please, enter the current date" << endl;
             cin >> d2 >> m2 >> y2;
 
-            while (!function_5(d2, m2, y2))
+            while (!function_5(d2, m2, y2) || (y2 < y1) || (y2 == y1 && m2 < m1) || (y2 == y1 && m2 == m1 && d2 < d1))
+            {
+                cout << "Incorrect date" << endl;
                 cin >> d2 >> m2 >> y2;
+            }
             /// The number of days from the begin of year of birth
             if (y1 % 4 != 0 || (y1 % 100 == 0 && y1 % 400 != 0))
                 for (i = 0; i < m1-1; i++)
