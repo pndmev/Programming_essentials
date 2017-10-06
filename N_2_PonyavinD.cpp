@@ -135,7 +135,7 @@ int main2()
             /// Input
             cout << "Please, enter the date" << endl;
             cin >> day >> month >> year;
-            if (year < 1)
+            if (year < 1 || day < 1)
             {
                 cout << "Incorrect date" << endl;
                 return 1;
