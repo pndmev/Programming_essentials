@@ -128,7 +128,7 @@ int main5()
     cout << "2. Array with integers: minimal element + sort on increase (selection sort)" << endl;
     cout << "3. Is square matrix magic square?" << endl;
     cout << "4. Binary search of the location of a new element in the ordered array + return the index to the place of inclusion of a new element + insert sort" << endl;
-    cout << "5. Is the array B a subset of an array A? Return the index for the beginning of the found fragment. If there is no element, returns 0" << endl;
+    cout << "5. Is the array B a subset of an array A? Return the pointer for the beginning of the found fragment. If there is no element, returns 0" << endl;
     while (number == 0)
     {
         cin >> number;
@@ -247,7 +247,8 @@ int main5()
                 cout << B[i] << " ";
             cout << endl;
 
-            cout << check_subset5(A, nA, B, nB) << endl;
+            int *ptr = check_subset5(A, nA, B, nB);
+            cout << ptr << " - pointer of element " << *ptr << endl;
             break;
         }
     }
