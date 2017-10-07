@@ -4,15 +4,16 @@
 #include "N_2_PonyavinD.cpp"
 #include "N_3_PonyavinD.cpp"
 #include "N_4_PonyavinD.cpp"
+#include "N_5_PonyavinD.cpp"
 
 using namespace std;
 
 int main()
 {
     int number;
-    cout << "Please, enter the number of laboratory work (1 - 4)" << endl;
+    cout << "Please, enter the number of laboratory work (1 - 5)" << endl;
     cin >> number;
-    while (number < 1 || number > 4)
+    while (number < 1 || number > 5)
     {
         cout << "Incorrect number" << endl;
         cin >> number;
@@ -37,6 +38,11 @@ int main()
         case 4:
         {
             main4();
+            break;
+        }
+        case 5:
+        {
+            main5();
             break;
         }
     }
