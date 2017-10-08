@@ -50,7 +50,7 @@ int sum_column5 (int **a, int n, int NumberOfColumn)
     return sum;
 }
 
-int binary_search5(int *a, int left, int right, int x)
+int* binary_search5(int *a, int left, int right, int x)
 {
     int middle;
     while (1)
@@ -62,10 +62,10 @@ int binary_search5(int *a, int left, int right, int x)
             if (x > a[middle])
                 left = middle + 1;
             else
-                return middle;
+                return &a[0] + middle;
 
         if (left > right)
-            return left;
+            return &a[0] + left;
     }
 }
 
@@ -73,11 +73,11 @@ void insert_sort5 (int *a, int n)
 {
     for (int i = 1; i < n; i++)
     {
-        int index = binary_search5(a, 0, i - 1, a[i]); /// index
+        int *ptr = binary_search5(a, 0, i - 1, a[i]); /// index
         int x = a[i]; /// variable
-        for (int j = i; j > index; j--)
+        for (int j = i; j > ptr - &a[0]; j--)
             a[j] = a[j - 1];
-        a[index] = x;
+        *ptr = x;
     }
 }
 
@@ -90,24 +90,28 @@ int* check_subset5(int *A, int nA, int *B, int nB)
     int quantity = 0; /// quantity of identical elements in arrays A and B
     int index = 0; /// index
 
-    for (int i = 0; i < nA - nB; i++)
+    for (int i = 0; i < nA; i++)
     {
         if (B[0] == A[i])
         {
             index = i;
             quantity++;
+            if (nA - i < nB)
+                return 0;
             for (int j = 1; j < nB; j++)
             {
                 if (B[j] == A[i + j])
                     quantity++;
                 else
-                    if (B[j] > A[i + j])
-                    {
-                        i++;
-                        j--;
-                    }
-                    else
+                    if (B[j] < A[i + j])
                         return 0;
+                    else
+                        if (i + j < nA - 1)
+                        {
+                            i++;
+                            j--;
+                        }
+
             }
 
             if (quantity == nB)
@@ -117,6 +121,9 @@ int* check_subset5(int *A, int nA, int *B, int nB)
             else
                 return 0;
         }
+        else
+            if (i == nA - 1)
+                return 0;
     }
 }
 
@@ -248,7 +255,10 @@ int main5()
             cout << endl;
 
             int *ptr = check_subset5(A, nA, B, nB);
-            cout << ptr << " - pointer of element " << *ptr << endl;
+            if (ptr != 0)
+                cout << ptr << " - pointer of element " << *ptr << endl;
+            if (ptr == 0)
+                cout << ptr << endl;
             break;
         }
     }
