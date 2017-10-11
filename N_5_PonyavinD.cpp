@@ -3,13 +3,6 @@
 
 using namespace std;
 
-void swap5 (int &a, int &b)
-{
-    int bufer = a;
-    a = b;
-    b = bufer;
-}
-
 int number_of_minimal_element5 (int *a, int n)
 {
     int MinimalElement = *a; /// minimal element in array
@@ -28,7 +21,7 @@ void buble_sort5 (int *a, int n)
     for (int i = 0; i < n; i++)
         for (int j = n - 1; j > i; j--)
             if (a[j] < a[i])
-                swap5(a[j], a[i]);
+                my_swap(a[j], a[i]);
 }
 
 void selection_sort5 (int *a, int n)
@@ -38,7 +31,7 @@ void selection_sort5 (int *a, int n)
     {
         NumberOfMinimalElement = number_of_minimal_element5(a + i, n - i) + i;
         if (a[i] != a[NumberOfMinimalElement])
-            swap5(a[i], a[NumberOfMinimalElement]);
+            my_swap(a[i], a[NumberOfMinimalElement]);
     }
 }
 
@@ -105,6 +98,47 @@ bool check_magic_square5 (int **a, int n)
             return false;
         }
     return true;
+}
+
+int* check_substring5 (int *A, int nA, int *B, int nB)
+{
+    if (nB > nA)
+        return 0;
+    if (nB == 1 && B[0] == A[nA - 1])
+        return &A[nA - 1];
+
+    int quantity = 0; /// quantity of identical elements in arrays A and B
+    int index = 0; /// index
+
+    for (int i = 0; i < nA; i++)
+    {
+        if (B[0] == A[i])
+        {
+            index = i;
+            quantity++;
+            if (nA - i < nB)
+                return 0;
+            for (int j = 1; j < nB; j++)
+            {
+                if (B[j] == A[i + j])
+                    quantity++;
+                else
+                {
+                    quantity = 0;
+                    break;
+                }
+            }
+
+            if (quantity == nB)
+            {
+                return &A[0] + index;
+            }
+        }
+        else
+            if (i == nA - 1)
+                return 0;
+    }
+    return 0;
 }
 
 int* check_subset5(int *A, int nA, int *B, int nB)
@@ -217,23 +251,48 @@ int main5()
             cout << "Array B:" << endl;
             int *B = cin_array(nB); /// Input B
 
-            /// Sorting
-            insert_sort5(A, nA);
-            insert_sort5(B, nB);
+            cout << "Subset or substring? Input 1 or 2" << endl;
+            int answer = 0;
+            cin >> answer;
+            switch (answer)
+            {
+                case 1:
+                {
+                    /// Sorting
+                    insert_sort5(A, nA);
+                    insert_sort5(B, nB);
 
-            /// Output 1
-            cout << "Sorted array A: ";
-            cout_array(A, nA);
+                    /// Output 1
+                    cout << "Sorted array A: ";
+                    cout_array(A, nA);
 
-            cout << "Sorted array B: ";
-            cout_array(B, nB);
+                    cout << "Sorted array B: ";
+                    cout_array(B, nB);
 
-            /// Processing and output result
-            int *ptr = check_subset5(A, nA, B, nB);
-            if (ptr != 0)
-                cout << ptr << " - pointer of element " << *ptr << endl;
-            else
-                cout << ptr << endl;
+                    /// Processing and output result
+                    int *ptr = check_subset5(A, nA, B, nB);
+                    if (ptr != 0)
+                        cout << ptr << " - pointer of element " << *ptr << endl;
+                    else
+                        cout << ptr << endl;
+                    break;
+                }
+                case 2:
+                {
+                    /// Processing and output result
+                    int *ptr = check_substring5(A, nA, B, nB);
+                    if (ptr != 0)
+                        cout << ptr << " - pointer of element " << *ptr << endl;
+                    else
+                        cout << ptr << endl;
+                    break;
+                }
+                default:
+                {
+                    cout << "Incorrect" << endl;
+                    return 0;
+                }
+            }
             break;
         }
     }
