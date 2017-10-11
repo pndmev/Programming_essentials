@@ -52,7 +52,7 @@ Input					Waiting					Result
 
 #5
 
-Input					Result
+Input					Result (subset)				
 A: 1 2 2 3 3 3 4 4 4 4 5 5 5 5 5	0x801398 - pointer of element 1 (correct)
 B: 1 2 3 4 5
 
@@ -70,3 +70,20 @@ B: 1 7 18 278 12948 12949801
 
 A: 12 23 127 2938 12749 345781		0xc60eb4 - pointer of element 345781 (correct)
 B: 345781
+
+
+Input					Result (substring)				
+A: 5 5 5 5 5 4 4 4 4 3 3 3 2 2 1	0 (correct)
+B: 5 4 3 2 1
+
+A: 8 5 1 18 12 178 24 2938 34567	0x6f0eac - pointer of element 18 (correct)
+B: 18 12 178 24 2938
+
+A: -1278 28998 1673619 138918980	0 (correct)
+B: 17 1398470 128989980
+
+A: 1 7 18 278 12948			0 (correct)
+B: 1 7 18 278 12948 12949801
+
+A: 12 23 127 345781 2938 12749		0x7c0eb4 - pointer of element 12749 (correct)
+B: 12749
