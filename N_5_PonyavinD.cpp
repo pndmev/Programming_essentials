@@ -1,38 +1,7 @@
 #include <iostream>
+#include "Super_functions.cpp"
 
 using namespace std;
-
-int* cin_array(int &n)
-{
-    cout << "Please, enter the number of elements of array" << endl;
-    cin >> n;
-    int *a = new int [n]; /// array with integers
-    cout << "Please, enter elements of array" << endl;
-    for (int i = 0; i < n; i++)
-        cin >> a[i];
-    return a;
-}
-
-int** cin_square_matrix(int &n)
-{
-    cout << "Please, enter the number of rows in square matrix" << endl;
-    cin >> n;
-    int** a = new int*[n]; /// array with integers
-    for(int i = 0; i < n; i++)
-        a[i] = new int[n];
-    cout << "Please, enter elements of matrix" << endl;
-    for (int i = 0; i < n; i++)
-        for (int j = 0; j < n; j++)
-            cin >> a[i][j];
-    return a;
-}
-
-void cout_array(int *a, int n)
-{
-    for (int i = 0; i < n; i++)
-        cout << a[i] << " ";
-    cout << endl;
-}
 
 void swap5 (int &a, int &b)
 {
@@ -120,7 +89,7 @@ void insert_sort5 (int *a, int n)
     }
 }
 
-bool check_magic_square (int **a, int n)
+bool check_magic_square5 (int **a, int n)
 {
     int sum = sum_row5(a[0], n); /// value of sum of first line
     /// Processing and check (line)
@@ -224,7 +193,7 @@ int main5()
         {
             int n; /// number of elements
             int **a = cin_square_matrix(n); /// Input
-            if (check_magic_square(a, n))
+            if (check_magic_square5(a, n))
                 cout << "This matrix is magic square" << endl;
             else
                 cout << "This matrix is not magic square" << endl;
