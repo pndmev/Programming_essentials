@@ -35,6 +35,28 @@ void selection_sort5 (int *a, int n)
     }
 }
 
+int sum_1_diagonal5 (int **a, int n)
+{
+    int sum = 0;
+    int j = 0; /// counter
+    for (int i = 0; i < n; i++)
+    {
+        sum += a[i][j];
+        j++;
+    }
+}
+
+int sum_2_diagonal5 (int **a, int n)
+{
+    int sum = 0;
+    int j = n - 1; /// counter
+    for (int i = 0; i < n; i++)
+    {
+        sum += a[i][j];
+        j--;
+    }
+}
+
 int sum_row5 (int *a, int n)
 {
     int sum = 0;
@@ -84,9 +106,11 @@ void insert_sort5 (int *a, int n)
 
 bool check_magic_square5 (int **a, int n)
 {
-    int sum = sum_row5(a[0], n); /// value of sum of first line
+    int sum = sum_1_diagonal5(a, n); /// value of sum
+    if (sum != sum_2_diagonal5(a, n))
+        return false;
     /// Processing and check (line)
-    for (int i = 1; i < n; i++)
+    for (int i = 0; i < n; i++)
         if (sum_row5(a[i], n) != sum)
         {
             return false;
