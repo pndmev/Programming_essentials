@@ -18,9 +18,13 @@ int number_of_minimal_element5 (int *a, int n)
 void buble_sort5 (int *a, int n)
 {
     for (int i = 0; i < n; i++)
-        for (int j = n - 1; j > i; j--)
-            if (a[j] < a[i])
-                my_swap(a[j], a[i]);
+    {
+        for (int j = 0; j < n - i; j++)
+        {
+            if (a[j] > a[j + 1])
+                my_swap(a[j], a[j + 1]);
+        }
+    }
 }
 
 void selection_sort5 (int *a, int n)
