@@ -350,24 +350,24 @@ int main6()
         }
         case 3:
         {
-            string s;
+            string s; /// string with decimal constants
             cout << "Please, enter string" << endl;
-            cin >> s;
-            int quantity;
-            int *a;
-            a = search_of_decimal_constants6(s, quantity);
-            cout_array(a, quantity);
+            cin >> s; /// Input
+            int quantity; /// quantity of constants
+            int *a; /// array with constants
+            a = search_of_decimal_constants6(s, quantity); /// Processing
+            cout_array(a, quantity); /// Output
             break;
         }
         case 4:
         {
-            string s;
+            string s; /// string with real constants
             cout << "Please, enter string" << endl;
-            cin >> s;
-            int quantity;
-            double *a;
-            a = search_of_real_constants6(s, quantity);
-            cout_array_double(a, quantity);
+            cin >> s; /// Input
+            int quantity; /// quantity of constants
+            double *a; /// array with constants
+            a = search_of_real_constants6(s, quantity); /// Processing
+            cout_array_double(a, quantity); /// Output
             break;
         }
     }
