@@ -1,0 +1,94 @@
+#1
+
+1)2) Input			Output1						Output2
+6				Array with prime numbers:			Sorted array:
+9 4 1 0 6 15			This array doesn't have elements (correct)	0 1 4 6 9 15 		      (correct)
+									
+6				Array with prime numbers:			Sorted array:
+18 -5 4 -2 -1 27		This array doesn't have elements (correct)	-5 -2 -1 4 18 27 	      (correct)
+									
+12				Array with prime numbers:			Sorted array:
+8 7 -1 0 2 4 3 17 25 71 19 35	7 2 3 17 71 19			 (correct)	-1 0 2 3 4 7 8 17 19 25 35 71 (correct)
+
+3) Input 			Output3
+7				Median of array:
+-6 7 1 4 5 2 3			3
+				
+7				Median of array:
+7 1 7 8 9 9 10			8
+
+8				Median of array:
+-16 -3 16 8 3 4 1 7		3
+				
+8				Median of array:
+7 13 13 7 8 2 8 1		7
+
+#2
+1) Input		Output1			
+4 5			16 -7 10 37 -9		
+			17 83 12 93 -8		
+16 -7 10 37 -9		-7 81 92 17 12		
+17 83 12 93 -8		-1 19 32 41 14		
+-1 19 32 41 14		18 -4 71 -7 23		
+18 -4 71 -7 23		(correct)		
+						
+-7 81 92 17 12					
+						
+2						
+--------------------------------------		
+4 5			16 -7 10 37 -9		
+			17 83 12 93 -8		
+16 -7 10 37 -9		-1 19 32 41 14		
+17 83 12 93 -8		18 -4 71 -7 23		
+-1 19 32 41 14		-7 81 92 17 12		
+18 -4 71 -7 23		(correct)
+			
+-7 81 92 17 12		
+			
+4
+
+2) Input		Output2			
+4 5			16 -7 10 37 -9		
+			-1 19 32 41 14		
+16 -7 10 37 -9		18 -4 71 -7 23		
+17 83 12 93 -8		(correct)		
+-1 19 32 41 14				
+18 -4 71 -7 23					
+				
+1						
+--------------------------------------		
+4 5			16 -7 10 37 -9		
+			17 83 12 93 -8		
+16 -7 10 37 -9		-1 19 32 41 14		
+17 83 12 93 -8		(correct)		
+-1 19 32 41 14				
+18 -4 71 -7 23		
+		
+3
+
+#3
+Input
+kjhsak37ughj.2376ugugkk55.23497yuhfsjhek146.sefj58428jsk134568uhkhkjshfi78n
+
+Output
+Array with decimal
+37 2376 55 23497 146 58428 134568 78
+
+Input
+HJG134AFFHG456CA46hggdsjk3476hkj24889KJGH2367GKJ986-kjgkjg47.36fjkhkh67ABgh
+
+Output
+134 456 46 3476 24889 2367 986 47 36 67
+
+#4
+Input
+jhghjsf.jhghk4.37kjsdfkjh49.sjdhgj.29856kjhsdkjgh..sg
+
+Output
+4.37 49 0.29856
+
+Input
+kjhgq276.ABhgjhdsf67A.34skjdfhg.h24gjs345.ksjdfgkj3247bjsd.235iuyhbskjs76gjhsd.
+
+Output
+276 67 0.34 24 345 3247 0.235 76
