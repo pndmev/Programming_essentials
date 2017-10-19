@@ -11,7 +11,7 @@ int* search_prime_numbers6 (int *a, int &n)
     for (int i = 0; i < n; i++)
     {
         quantity = 0;
-        if (a[i] != 1)
+        if (a[i] > 1)
         {
             for (int j = a[i] - 1; j > 1; j--)
             {
@@ -26,6 +26,7 @@ int* search_prime_numbers6 (int *a, int &n)
         }
     }
     n = counter;
+    cout << "Array with prime numbers: " << endl;
     return b;
 }
 
@@ -48,16 +49,19 @@ int* shaker_sort6 (int *a, int &n)
                 my_swap(b[i], b[i - 1]);
         }
     }
+    cout << "Sorted array: " << endl;
     return b;
 }
 
 int* search_median6 (int *a, int &n)
 {
     int *b = copy_array(a, n);
-    quick_sort(b, n);
+    shaker_sort(b, n);
     int *median = new int [1];
-    median = b + n/2;
+    median = b + (n - 1)/2;
+    delete_array(b);
     n = 1;
+    cout << "Median of array: " << endl;
     return median;
 }
 
@@ -71,8 +75,7 @@ int** insert_row(int **a, int *x, int position, int &nRowA, int &nColumnA)
     {
         if (i < position)
         {
-            for (int j = 0; j < nColumnA; j++)
-                b[i][j] = a[i][j];
+            b[i] = a[i];
         }
         else
             if (i == position)
@@ -82,8 +85,7 @@ int** insert_row(int **a, int *x, int position, int &nRowA, int &nColumnA)
             }
             else
             {
-                for (int j = 0; j < nColumnA; j++)
-                    b[i][j] = a[i - 1][j];
+                b[i] = a[i - 1];
             }
     }
     return b;
@@ -95,17 +97,16 @@ int** delete_row(int **a, int *x, int position, int &nRowA, int &nColumnA)
     int** b = new int* [nRowA];
     for (int i = 0; i < nRowA; i++)
         b[i] = new int [nColumnA];
+    delete_array(a[position]);
     for (int i = 0; i < nRowA; i++)
     {
         if (i < position)
         {
-            for (int j = 0; j < nColumnA; j++)
-                b[i][j] = a[i][j];
+            b[i] = a[i];
         }
         else
         {
-            for (int j = 0; j < nColumnA; j++)
-                b[i][j] = a[i - 1][j];
+            b[i] = a[i + 1];
         }
     }
     return b;
@@ -113,12 +114,12 @@ int** delete_row(int **a, int *x, int position, int &nRowA, int &nColumnA)
 
 bool check_char_digit6 (char c)
 {
-    return c > 47 && c < 58 ? true: false;
+    return c > 47 && c < 58;
 }
 
 bool check_char_digit_and_point6 (char c)
 {
-    return  c == '.' || (c > 47 && c < 58)? true: false;
+    return  c == '.' || (c > 47 && c < 58);
 }
 
 int string_to_int6 (string s)
@@ -203,6 +204,8 @@ double* search_of_real_constants6 (string s, int &quantity)
     quantity = 0;
     for (int i = 0; i < sSize; i++)
     {
+        while (s[i] == '.' && !(check_char_digit6(s[i-1]) && i > 0 || check_char_digit6(s[i+1]) && i < sSize - 1))
+            i++;
         if (check_char_digit_and_point6(s[i]))
         {
             bool flag = true;
@@ -264,110 +267,148 @@ int main6()
     {
         case 1:
         {
-            int na; /// quantity of elements of array a
-            int nb; /// quantity of elements of array b
-            int *a = cin_array(na); /// input array
-            int *b; /// result array
-            nb = na;
-            int* (*f)(int*, int&); /// pointer for functions
-            cout << "1) Search of prime numbers in array; 2) Sorting array; 3) Search of median of array. Please, enter 1, 2 or 3" << endl;
-            char answer;
-            cin >> answer;
-            /// Checking answer
-            switch (answer)
+            while (1)
             {
-                case '1':
+                int na; /// quantity of elements of array a
+                int nb; /// quantity of elements of array b
+                int *a = cin_array(na); /// input array
+                int *b; /// result array
+                nb = na;
+                int* (*f)(int*, int&); /// pointer for functions
+                cout << "1) Search of prime numbers in array; 2) Sorting array; 3) Search of median of array. Please, enter 1, 2 or 3" << endl;
+                char answer;
+                cin >> answer;
+                /// Checking answer
+                switch (answer)
                 {
-                    f = search_prime_numbers6;
-                    break;
-                }
-                case '2':
-                {
-                    f = shaker_sort6;
-                    break;
-                }
-                case '3':
-                {
-                    f = search_median6;
-                    break;
-                }
-                default:
-                {
-                    cout << "Incorrect" << endl;
-                    return 0;
-                }
-            }
-            b = (*f)(a, nb); /// Processing
-            cout_array(b, nb); /// Output
-            break;
-        }
-        case 2:
-        {
-            int nRowA; /// number of rows
-            int nColumnA; /// number of columns
-            int **a = cin_array_2(nRowA, nColumnA); /// input array
-            int *x; /// row for insert
-            int position; /// position of insert OR position of delete
-            int** (*f)(int**, int*, int, int&, int&); /// pointer for functions
-            cout << "1) Insert row; 2) Delete row. Please, enter 1 or 2" << endl;
-            char answer;
-            cin >> answer;
-            /// Checking answer
-            switch (answer)
-            {
-                case '1':
-                {
-                    f = insert_row;
-                    cout << "Please, enter the elements of row for inserting" << endl;
-                    x = new int [nColumnA];
-                    for (int i = 0; i < nColumnA; i++)
-                        cin >> x[i];
-                    cout << "Please, enter the number of position of this row in array" << endl;
-                    cin >> position;
-                    break;
-                }
-                case '2':
-                {
-                    f = delete_row;
-                    cout << "Please, enter number of row for deleting" << endl;
-                    cin >> position;
-                    if (position < 0 || position > nRowA)
+                    case '1':
+                    {
+                        f = search_prime_numbers6;
+                        break;
+                    }
+                    case '2':
+                    {
+                        f = shaker_sort6;
+                        break;
+                    }
+                    case '3':
+                    {
+                        f = search_median6;
+                        break;
+                    }
+                    default:
                     {
                         cout << "Incorrect" << endl;
                         return 0;
                     }
+                }
+                b = (*f)(a, nb); /// Processing
+                cout_array(b, nb); /// Output
+
+                delete_array(a);
+                delete_array(b);
+
+                if (!do_you_want_to_continue())
                     break;
-                }
-                default:
-                {
-                    cout << "Incorrect" << endl;
-                    return 0;
-                }
             }
-            a = (*f)(a, x, position, nRowA, nColumnA); /// Processing
-            cout_array_2(a, nRowA, nColumnA); /// Output
+            break;
+        }
+        case 2:
+        {
+            while (1)
+            {
+                int nRowA; /// number of rows
+                int nColumnA; /// number of columns
+                int **a = cin_array_2(nRowA, nColumnA); /// input array
+                int *x; /// row for insert
+                int position; /// position of insert OR position of delete
+                int** (*f)(int**, int*, int, int&, int&); /// pointer for functions
+                cout << "1) Insert row; 2) Delete row. Please, enter 1 or 2" << endl;
+                char answer;
+                cin >> answer;
+                /// Checking answer
+                switch (answer)
+                {
+                    case '1':
+                    {
+                        f = insert_row;
+                        cout << "Please, enter the elements of row for inserting" << endl;
+                        x = new int [nColumnA];
+                        for (int i = 0; i < nColumnA; i++)
+                            cin >> x[i];
+                        cout << "Please, enter the number of position of this row in array" << endl;
+                        cin >> position;
+                        if (position < 0 || position > nRowA - 1)
+                        {
+                            cout << "Incorrect" << endl;
+                            return 0;
+                        }
+                        break;
+                    }
+                    case '2':
+                    {
+                        f = delete_row;
+                        cout << "Please, enter number of row for deleting" << endl;
+                        cin >> position;
+                        if (position < 0 || position > nRowA - 1)
+                        {
+                            cout << "Incorrect" << endl;
+                            return 0;
+                        }
+                        break;
+                    }
+                    default:
+                    {
+                        cout << "Incorrect" << endl;
+                        return 0;
+                    }
+                }
+                a = (*f)(a, x, position, nRowA, nColumnA); /// Processing
+                cout_array_2(a, nRowA, nColumnA); /// Output
+
+                delete_array_2(a, nRowA);
+
+                if (!do_you_want_to_continue())
+                    break;
+            }
             break;
         }
         case 3:
         {
-            string s; /// string with decimal constants
-            cout << "Please, enter string" << endl;
-            cin >> s; /// Input
-            int quantity; /// quantity of constants
-            int *a; /// array with constants
-            a = search_of_decimal_constants6(s, quantity); /// Processing
-            cout_array(a, quantity); /// Output
+            while (1)
+            {
+                string s; /// string with decimal constants
+                cout << "Please, enter string" << endl;
+                cin >> s; /// Input
+                int quantity; /// quantity of constants
+                int *a; /// array with constants
+                a = search_of_decimal_constants6(s, quantity); /// Processing
+
+                cout << "Array with decimal constants:" << endl;
+                cout_array(a, quantity); /// Output
+
+                if (!do_you_want_to_continue())
+                    break;
+            }
             break;
         }
         case 4:
         {
-            string s; /// string with real constants
-            cout << "Please, enter string" << endl;
-            cin >> s; /// Input
-            int quantity; /// quantity of constants
-            double *a; /// array with constants
-            a = search_of_real_constants6(s, quantity); /// Processing
-            cout_array_double(a, quantity); /// Output
+            while (1)
+            {
+                string s; /// string with real constants
+                cout << "Please, enter string" << endl;
+                cin >> s; /// Input
+                int quantity; /// quantity of constants
+                double *a; /// array with constants
+                a = search_of_real_constants6(s, quantity); /// Processing
+
+                cout << "Array with real constants:" << endl;
+                cout_array_double(a, quantity); /// Output
+
+                if (!do_you_want_to_continue())
+                    break;
+            }
             break;
         }
     }
