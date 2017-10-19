@@ -45,16 +45,26 @@ int** cin_square_matrix(int &n)
 
 void cout_array(int *a, int n)
 {
-    for (int i = 0; i < n; i++)
-        cout << a[i] << " ";
-    cout << endl;
+    if (n > 0)
+    {
+        for (int i = 0; i < n; i++)
+            cout << a[i] << " ";
+        cout << endl;
+    }
+    else
+        cout << "This array doesn't have elements" << endl;
 }
 
 void cout_array_double(double *a, int n)
 {
-    for (int i = 0; i < n; i++)
-        cout << a[i] << " ";
-    cout << endl;
+    if (n > 0)
+    {
+        for (int i = 0; i < n; i++)
+            cout << a[i] << " ";
+        cout << endl;
+    }
+    else
+        cout << "This array doesn't have elements" << endl;
 }
 
 void cout_array_2(int **a, int nRow, int nColumn)
@@ -214,4 +224,23 @@ int str_size(string s)
         i++;
     return i;
 
+}
+
+bool do_you_want_to_continue ()
+{
+    cout << "Do you want to continue? Y or N" << endl;
+    string answer;
+    cin >> answer;
+    return answer != "N" ? true: false;
+}
+
+void delete_array (int* a)
+{
+    delete a;
+}
+
+void delete_array_2 (int** a , int n)
+{
+    for (int i = 0; i < n; i++)
+        delete a[i];
 }
