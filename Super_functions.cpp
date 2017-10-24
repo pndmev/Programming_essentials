@@ -67,6 +67,18 @@ void cout_array_double(double *a, int n)
         cout << "This array doesn't have elements" << endl;
 }
 
+void cout_array_char(char *a, int n)
+{
+    if (n > 0)
+    {
+        for (int i = 0; i < n; i++)
+            cout << a[i] << " ";
+        cout << endl;
+    }
+    else
+        cout << "This array doesn't have elements" << endl;
+}
+
 void cout_array_2(int **a, int nRow, int nColumn)
 {
     for (int i = 0; i < nRow; i++)
@@ -141,24 +153,28 @@ void quick_sort (int *a, int n)
 {
     int left = 0;
     int right = n - 1;
-    int middle = n / 2;
+    int middle = (left + right) / 2;
 
-    while (left < right)
+    while (right >= left)
     {
-        while (a[left] <= a[middle])
-            left++;
-        while (a[right] >= a[middle])
+        while (a[right] > a[middle])
             right--;
-        if (left < right)
+        while (a[left] < a[middle])
+            left++;
+        if (left <= right)
+        {
             my_swap(a[left], a[right]);
+            left++;
+            right--;
+        }
     }
-    if (left > 0)
+    if (0 < right)
     {
-        quick_sort (a + left, middle);
+        quick_sort (a, right + 1);
     }
-    if (right < n - 1)
+    if (left < n - 1)
     {
-        quick_sort (a + middle, right);
+        quick_sort (a + left, n - left);
     }
 }
 
@@ -226,6 +242,19 @@ int str_size(string s)
 
 }
 
+int string_to_int (string s)
+{
+    int sSize = str_size(s);
+    int coefficient = 1;
+    int result = 0;
+    for (int i = sSize - 1; i >= 0; i--)
+    {
+        result += coefficient * (s[i] - 48);
+        coefficient *= 10;
+    }
+    return result;
+}
+
 bool do_you_want_to_continue ()
 {
     cout << "Do you want to continue? Y or N" << endl;
@@ -243,4 +272,112 @@ void delete_array_2 (int** a , int n)
 {
     for (int i = 0; i < n; i++)
         delete a[i];
+}
+
+struct Node_char
+{
+    char data;
+    Node_char *next;
+};
+
+struct My_stack_char
+{
+    Node_char *ptr;
+};
+
+struct Node_int
+{
+    int data;
+    Node_int *next;
+};
+
+struct My_stack_int
+{
+    Node_int *ptr;
+};
+
+void add_My_stack_char (My_stack_char& s, char d)
+{
+    Node_char *newNode_char = new Node_char;
+    newNode_char -> next = s.ptr;
+    newNode_char -> data = d;
+    s.ptr = newNode_char;
+}
+
+void add_My_stack_int (My_stack_int& s, int d)
+{
+    Node_int *newNode_int = new Node_int;
+    newNode_int -> next = s.ptr;
+    newNode_int -> data = d;
+    s.ptr = newNode_int;
+}
+
+void delete_last_element_My_stack_char (My_stack_char& s)
+{
+    s.ptr = s.ptr -> next;
+}
+
+void delete_last_element_My_stack_int (My_stack_int& s)
+{
+    s.ptr = s.ptr -> next;
+}
+
+My_stack_char create_My_stack_char()
+{
+    char c;
+    My_stack_char s;
+    s.ptr = 0;
+    while (do_you_want_to_continue())
+    {
+        cin >> c;
+        add_My_stack_char(s, c);
+    }
+    return s;
+}
+
+void print_My_stack_char (My_stack_char& s)
+{
+    Node_char *p = s.ptr;
+    while (p)
+    {
+        cout << p -> data << " ";
+        p = p -> next;
+    }
+    cout << endl;
+}
+
+int size_of_My_stack_char (My_stack_char& s)
+{
+    Node_char *p = s.ptr;
+    int counter = 0;
+    while (p)
+    {
+        counter++;
+        p = p -> next;
+    }
+    return counter;
+}
+
+My_stack_char string_to_My_stack_char (string str)
+{
+    My_stack_char s;
+    s.ptr = 0;
+    int SizeOfStr = str_size(str);
+    for (int i = 0; i < SizeOfStr; i++)
+        add_My_stack_char(s, str[i]);
+    return s;
+}
+
+char* My_stack_char_to_array (My_stack_char& s, int SizeOfStackChar)
+{
+    Node_char *p = s.ptr;
+    char *a = new char [SizeOfStackChar];
+    int i = 0;
+    while (p)
+    {
+        a[i] = p -> data;
+        p = p -> next;
+        i++;
+    }
+    return a;
 }
