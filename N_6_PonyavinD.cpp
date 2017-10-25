@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
@@ -13,7 +14,8 @@ int* search_prime_numbers6 (int *a, int &n)
         quantity = 0;
         if (a[i] > 1)
         {
-            for (int j = a[i] - 1; j > 1; j--)
+            double sqrtA = sqrt(a[i]);
+            for (int j = int(sqrtA); j > 1; j--)
             {
                 if (a[i] % j == 0)
                     quantity++;
