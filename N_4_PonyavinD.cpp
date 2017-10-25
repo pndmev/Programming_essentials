@@ -41,32 +41,31 @@ int main4()
                 cin >> n;
             }
             int *a = new int [n]; /// input data (array)
-            int *k = new int [n]; /// quantity of numbers
             int quantityOdd = 0; /// quantity of numbers with odd quantity
             int x; /// result
             cout << "Please, enter elements of array" << endl;
             for (int i = 0; i < n; i++)
             {
                 cin >> a[i];
-                k[i] = 1;
             }
             /// Processing
             for (int i = 0; i < n; i++)
             {
+                int k = 1;
                 for (int j = i + 1; j < n; j++)
                 {
                     if (a[j] == a[i])
                     {
                         for (int t = j; t < n - 1; t++)
                             a[t] = a[t + 1];
-                        k[i]++;
+                        k++;
                         n--;
                         j--;
                     }
 
                 }
                 /// Check
-                if (k[i] % 2 != 0)
+                if (k % 2 != 0)
                 {
                     x = a[i];
                     quantityOdd++;
@@ -328,7 +327,6 @@ int main4()
             int *d = new int [n - 1]; /// d[1] = a[2] - a[1], d[2] = a[3] - a[2], ..., d[n-1] = a[n] - a[n-1]
             for (int i = 0; i < n - 1; i++)
                 d[i] = a[i + 1] - a[i];
-            int i = 0; /// counter
             ///Processing
             for (int i = 0; i < n - 2; i++)
             {
