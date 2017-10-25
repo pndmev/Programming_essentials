@@ -1,0 +1,27 @@
+#1
+
+Input				Output				
+([8{}1])			Brackets are placed correct	(correct)
+(t[{45}g]			Brackets aren't placed correct	(correct)
+(12[e{g]}7)			Brackets aren't placed correct	(correct)
+(hdf(jsd[ksdj]{kd})[]({})([]))	Brackets are placed correct	(correct)
+
+#2 (#3)
+
+Input			Output
+1h+sj			It isn't mathematical expression	(correct)
+1+h			It isn't mathematical expression	(correct)
+5*(12+4			Brackets aren't placed correct		(correct)
+([7+)-6]		It isn't mathematical expression	(correct)
+()			It isn't mathematical expression	(correct)
+123			123					(correct)
+123+			It isn't mathematical expression	(correct)
++123			123					(correct)
+-123			-123					(correct)
+*123			It isn't mathematical expression	(correct)
+123-123			0					(correct)
+123--123		246					(correct)
+123---123		It isn't mathematical expression	(correct)
+25//5			It isn't mathematical expression	(correct)
+-123-+123		-246					(correct)
+(1+2*[23-14/{1+6}])-12	31					(correct)
