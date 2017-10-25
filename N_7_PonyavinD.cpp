@@ -42,13 +42,16 @@ bool are_brackets_placed_correct (string str)
             }
         }
     }
-    return true;
+    if (s.ptr -> data == '|')
+        return true;
+    else
+        return false;
 }
 
 bool is_it_mathematical_expression (string str)
 {
     int SizeOfString = str_size(str);
-    int QuantityOperators = 0;
+    int QuantityOperators = 1;
     int QuantityNumbers = 0;
     for (int i = 0; i < SizeOfString; i++)
     {
@@ -57,7 +60,7 @@ bool is_it_mathematical_expression (string str)
             case '+': case '-':
             {
                 QuantityOperators++;
-                if (i + 1 >= SizeOfString || str[i + 1] == ')' || str[i + 1] == ']' || str[i + 1] == '}' || str[i + 1] == '+' || str[i + 1] == '-')
+                if (i + 1 >= SizeOfString || str[i + 1] == ')' || str[i + 1] == ']' || str[i + 1] == '}' || (str[i + 1] == '-' || str[i + 1] == '+') && (i + 2 >= SizeOfString || str[i + 2] < 47 || str[i + 2] > 58))
                     return false;
                 break;
             }
@@ -74,7 +77,7 @@ bool is_it_mathematical_expression (string str)
             {
                 if (str[i + 1] == ')' || str[i + 1] == ']' || str[i + 1] == '}')
                     return false;
-                if (str[i - 1] >= 47 && str[i - 1] <= 58)
+                if (str[i - 1] >= 48 && str[i - 1] <= 57)
                     return false;
                 break;
             }
@@ -124,17 +127,17 @@ string reverse_Polish_notation(string str)
     int sizeStr = str_size(str);
     for (int i = 0; i < sizeStr; i++)
     {
-        if ((i - 1 < 0 || str[i - 1] == '(' || str[i - 1] == '[') && (str[i] == '-' || str[i] == '+'))
+        if ((i - 1 < 0 || str[i - 1] == '(' || str[i - 1] == '[' || str[i - 1] == '{' || str[i - 1] == '+' || str[i - 1] == '-' || str[i - 1] == '*' || str[i - 1] == '/') && (str[i] == '-' || str[i] == '+'))
         {
             string bufer;
             for (int j = 0; j < i; j++)
                 bufer += str[j];
-            bufer += "0";
-            sizeStr++;
+            bufer += "(0";
+            sizeStr += 3;
             for (int j = i; j < sizeStr; j++)
                 bufer += str[j];
+            bufer += ")";
             str = bufer;
-            i--;
         }
         if (str[i] > 47 && str[i] < 58)
         {
