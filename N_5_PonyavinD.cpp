@@ -88,10 +88,10 @@ int* binary_search5(int *a, int left, int right, int x)
             if (x > a[middle])
                 left = middle + 1;
             else
-                return &a[0] + middle;
+                return a + middle;
 
         if (left > right)
-            return &a[0] + left;
+            return a + left;
     }
 }
 
@@ -216,111 +216,122 @@ int* check_subset5(int *A, int nA, int *B, int nB)
 
 int main5()
 {
-    int number = 0;
-    cout << "Please, enter the number of task ( 1, 2, 3, 4, 5 )" << endl;
     cout << "1. Array with integers: sort on increase (bubble sort)" << endl;
     cout << "2. Array with integers: minimal element + sort on increase (selection sort)" << endl;
     cout << "3. Is square matrix magic square?" << endl;
     cout << "4. Binary search of the location of a new element in the ordered array + return the index to the place of inclusion of a new element + insert sort" << endl;
     cout << "5. Is the array B a subset of an array A? Return the pointer for the beginning of the found fragment. If there is no element, returns 0" << endl;
-    while (number == 0)
-    {
-        cin >> number;
-        if (number < 1 || number > 5)
-        {
-            cout << "Incorrect number" << endl;
-            number = 0;
-        }
-    }
-    switch (number)
-    {
-        case 1:
-        {
-            int n; /// number of elements
-            int *a = cin_array(n); /// Input
-            buble_sort5(a, n); /// Bubble sorting
-            cout_array(a, n); /// Output
-            break;
-        }
-        case 2:
-        {
-            int n; /// number of elements
-            int *a = cin_array(n); /// Input
-            selection_sort5(a, n); /// Selection sorting
-            cout_array(a, n); /// Output
-            break;
-        }
-        case 3:
-        {
-            int n; /// number of elements
-            int **a = cin_square_matrix(n); /// Input
-            if (check_magic_square5(a, n))
-                cout << "This matrix is magic square" << endl;
-            else
-                cout << "This matrix is not magic square" << endl;
-            break;
-        }
-        case 4:
-        {
-            int n; /// number of elements
-            int *a = cin_array(n); /// Input
-            insert_sort5(a, n); /// Insert sorting
-            cout_array(a, n); /// Output
-            break;
-        }
-        case 5:
-        {
-            int nA; /// number of elements of array A
-            cout << "Array A:" << endl;
-            int *A = cin_array(nA); /// Input A
 
-            int nB; /// number of elements of array B
-            cout << "Array B:" << endl;
-            int *B = cin_array(nB); /// Input B
+    while (do_you_want_to_continue())
+    {
+        int number = 0;
+        cout << "Please, enter the number of task ( 1, 2, 3, 4, 5 )" << endl;
 
-            cout << "Subset or substring? Input 1 or 2" << endl;
-            int answer = 0;
-            cin >> answer;
-            switch (answer)
+        while (number == 0)
+        {
+            cin >> number;
+            if (number < 1 || number > 5)
             {
-                case 1:
-                {
-                    /// Sorting
-                    insert_sort5(A, nA);
-                    insert_sort5(B, nB);
-
-                    /// Output 1
-                    cout << "Sorted array A: ";
-                    cout_array(A, nA);
-
-                    cout << "Sorted array B: ";
-                    cout_array(B, nB);
-
-                    /// Processing and output result
-                    int *ptr = check_subset5(A, nA, B, nB);
-                    if (ptr != 0)
-                        cout << ptr << " - pointer of element " << *ptr << endl;
-                    else
-                        cout << ptr << endl;
-                    break;
-                }
-                case 2:
-                {
-                    /// Processing and output result
-                    int *ptr = check_substring5(A, nA, B, nB);
-                    if (ptr != 0)
-                        cout << ptr << " - pointer of element " << *ptr << endl;
-                    else
-                        cout << ptr << endl;
-                    break;
-                }
-                default:
-                {
-                    cout << "Incorrect" << endl;
-                    return 0;
-                }
+                cout << "Incorrect number" << endl;
+                number = 0;
             }
-            break;
+        }
+        switch (number)
+        {
+            case 1:
+            {
+                int n; /// number of elements
+                int *a = cin_array(n); /// Input
+                buble_sort5(a, n); /// Bubble sorting
+                cout_array(a, n); /// Output
+                delete_array(a);
+                break;
+            }
+            case 2:
+            {
+                int n; /// number of elements
+                int *a = cin_array(n); /// Input
+                selection_sort5(a, n); /// Selection sorting
+                cout_array(a, n); /// Output
+                delete_array(a);
+                break;
+            }
+            case 3:
+            {
+                int n; /// number of elements
+                int **a = cin_square_matrix(n); /// Input
+                if (check_magic_square5(a, n))
+                    cout << "This matrix is magic square" << endl;
+                else
+                    cout << "This matrix is not magic square" << endl;
+                delete_array_2(a, n);
+                break;
+            }
+            case 4:
+            {
+                int n; /// number of elements
+                int *a = cin_array(n); /// Input
+                insert_sort5(a, n); /// Insert sorting
+                cout_array(a, n); /// Output
+                delete_array(a);
+                break;
+            }
+            case 5:
+            {
+                int nA; /// number of elements of array A
+                cout << "Array A:" << endl;
+                int *A = cin_array(nA); /// Input A
+
+                int nB; /// number of elements of array B
+                cout << "Array B:" << endl;
+                int *B = cin_array(nB); /// Input B
+
+                cout << "Subset or substring? Input 1 or 2" << endl;
+                int answer = 0;
+                cin >> answer;
+                switch (answer)
+                {
+                    case 1:
+                    {
+                        /// Sorting
+                        insert_sort5(A, nA);
+                        insert_sort5(B, nB);
+
+                        /// Output 1
+                        cout << "Sorted array A: ";
+                        cout_array(A, nA);
+
+                        cout << "Sorted array B: ";
+                        cout_array(B, nB);
+
+                        /// Processing and output result
+                        int *ptr = check_subset5(A, nA, B, nB);
+                        if (ptr != 0)
+                            cout << ptr << " - pointer of element " << *ptr << endl;
+                        else
+                            cout << ptr << endl;
+                        break;
+                    }
+                    case 2:
+                    {
+                        /// Processing and output result
+                        int *ptr = check_substring5(A, nA, B, nB);
+                        if (ptr != 0)
+                            cout << ptr << " - pointer of element " << *ptr << endl;
+                        else
+                            cout << ptr << endl;
+                        break;
+                    }
+                    default:
+                    {
+                        cout << "Incorrect" << endl;
+                        return 0;
+                    }
+                }
+                delete_array(A);
+                delete_array(B);
+                break;
+            }
         }
     }
     return 0;
