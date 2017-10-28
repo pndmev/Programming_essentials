@@ -89,10 +89,10 @@ int main4()
 
                 cout << "Please, enter integers (more than 3)" << endl;
                 /// Input and processing
-                cin >> x;
+                cin >> x; /// first variable
                 a[4] = x;
 
-                cin >> x;
+                cin >> x; /// second variable
 
                 if (x > a[4])
                 {
@@ -106,7 +106,7 @@ int main4()
                     a[1] = x;
                 }
 
-                cin >> x;
+                cin >> x; /// third variable
 
                 if (x > a[4])
                 {
@@ -133,7 +133,7 @@ int main4()
                 cin >> answer;
                 while (answer != "EXIT")
                 {
-                    cin >> x;
+                    cin >> x; /// 4+ variable
                     if (x > a[4])
                     {
                         a[2] = a[3];
