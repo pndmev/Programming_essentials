@@ -3,6 +3,25 @@
 
 using namespace std;
 
+bool check_data1 (int d, int &day, int &month)
+{
+    if (day > d)
+    {
+        cout << "Incorrect date" << endl;
+        return false;
+    }
+    else
+    {
+        day++;
+        if (day == d + 1)
+        {
+            day = 1;
+            month++;
+        }
+    }
+    return true;
+}
+
 int main2()
 {
     cout << "1. n = 2^x ?" << endl;
@@ -30,7 +49,7 @@ int main2()
             case 1:
             {
                 int n = 0; /// input data
-                bool even = true; /// flag
+                bool isEven = false; /// flag
                 /// Input
                 while (n == 0)
                 {
@@ -39,18 +58,19 @@ int main2()
                     if (n < 1)
                         n = 0;
                 }
+                int number = n;
                 /// Is n power of 2?
-                while (n > 1)
+                if (number != 1)
                 {
-                    if (n % 2)
+                    while (!(number % 2))
                     {
-                        even = false;
-                        break;
+                        number /= 2;
                     }
-                    n /= 2;
+                    if (number == 1)
+                        isEven = true;
                 }
                 /// Output
-                if (even)
+                if (isEven)
                     cout << n << " is power of 2" << endl;
                 else
                     cout << n << " isn't power of 2" << endl;
@@ -145,69 +165,37 @@ int main2()
                 /// Check and processing
                 switch (month)
                 {
-                    case 1:
-                    case 3:
-                    case 5:
-                    case 7:
-                    case 8:
-                    case 10:
-                    case 12:
-                        {
-                            if (day > 31)
-                            {
-                                cout << "Incorrect date" << endl;
-                                return 1;
-                            }
-                            else
-                            {
-                                day++;
-                                if (day == 32)
-                                {
-                                    day = 1;
-                                    month++;
-                                }
-                            }
-                            break;
-                        }
-                    case 4:
-                    case 6:
-                    case 9:
-                    case 11:
-                        {
-                            if (day > 30)
-                            {
-                                cout << "Incorrect date" << endl;
-                                return 1;
-                            }
-                            else
-                            {
-                                day++;
-                                if (day == 31)
-                                {
-                                    day = 1;
-                                    month++;
-                                }
-                            }
-                            break;
-                        }
+                    case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+                    {
+                        if (!check_data1(31, day, month))
+                            return 1;
+                        break;
+                    }
+                    case 4: case 6: case 9: case 11:
+                    {
+                        if (!check_data1(30, day, month))
+                            return 1;
+                        break;
+                    }
                     case 2:
+                    {
+                        bool isLeapYear = year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+                        if ((day > 28 && !isLeapYear) || (day > 29 && isLeapYear))
                         {
-                            if ((day > 28 && (year % 4 != 0 || (year % 100 == 0 && year % 400 != 0))) || (day > 29 && year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)))
-                            {
-                                cout << "Incorrect date" << endl;
-                                return 1;
-                            }
-                            else
-                            {
-                                day++;
-                                if ((day == 29 && (year % 4 != 0 || (year % 100 == 0 && year % 400 != 0))) || (day == 30 && year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)))
-                                {
-                                    day = 1;
-                                    month++;
-                                }
-                            }
-                            break;
+                            cout << "Incorrect date" << endl;
+                            return 1;
                         }
+                        else
+                        {
+                            day++;
+                            if ((day == 29 && !isLeapYear) || (day == 30 && isLeapYear))
+                            {
+                                day = 1;
+                                month++;
+                            }
+                        }
+                        break;
+                    }
                     default:
                     {
                         cout << "Incorrect date" << endl;
@@ -228,7 +216,7 @@ int main2()
                     cout << "0" << month << ".";
                 else
                     cout << month << ".";
-                cout << year;
+                cout << year << endl;
                 break;
             }
         }
