@@ -136,6 +136,18 @@ int string_to_int6 (string s)
     return result;
 }
 
+int array_char_to_int6 (char *c, int n)
+{
+    int coefficient = 1;
+    int result = 0;
+    for (int i = n - 1; i >= 0; i--)
+    {
+        result += coefficient * (c[i] - 48);
+        coefficient *= 10;
+    }
+    return result;
+}
+
 double string_to_double6 (string s)
 {
     int sSize = str_size(s);
@@ -194,6 +206,48 @@ int* search_of_decimal_constants6 (string s, int &quantity)
         j++;
         a[i] = string_to_int6(StringWithNumber);
     }
+    return a;
+}
+
+int* search_of_decimal_constants_char6 (char *c, int n, int &quantity)
+{
+    char *StringWithConst = new char [n];
+    int counter = 0;
+    quantity = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (check_char_digit6(c[i]))
+        {
+            bool flag = true;
+            while (flag)
+            {
+                StringWithConst[counter] = c[i];
+                counter++;
+                i++;
+                flag = check_char_digit6(c[i]);
+            }
+            StringWithConst[counter] = ' ';
+            counter++;
+            quantity++;
+        }
+    }
+    int *a = new int [quantity];
+    int j = 0;
+    for (int i = 0; i < quantity; i++)
+    {
+        char *StringWithNumber = new char [n];
+        int counter2 = 0;
+        while (StringWithConst[j] != ' ')
+        {
+            StringWithNumber[counter2] = StringWithConst[j];
+            j++;
+            counter2++;
+        }
+        j++;
+        a[i] = array_char_to_int6(StringWithNumber, counter2);
+        delete StringWithNumber;
+    }
+    delete StringWithConst;
     return a;
 }
 
@@ -376,20 +430,48 @@ int main6()
         }
         case 3:
         {
-            while (1)
+            cout << "String or char? Please, enter 1 or 2" << endl;
+            string answer;
+            cin >> answer;
+            if (answer == "1")
             {
-                string s; /// string with decimal constants
-                cout << "Please, enter string" << endl;
-                cin >> s; /// Input
-                int quantity; /// quantity of constants
-                int *a; /// array with constants
-                a = search_of_decimal_constants6(s, quantity); /// Processing
+                while (1)
+                {
+                    string s; /// string with decimal constants
+                    cout << "Please, enter string" << endl;
+                    cin >> s; /// Input
+                    int quantity; /// quantity of constants
+                    int *a; /// array with constants
+                    a = search_of_decimal_constants6(s, quantity); /// Processing
 
-                cout << "Array with decimal constants:" << endl;
-                cout_array(a, quantity); /// Output
+                    cout << "Array with decimal constants:" << endl;
+                    cout_array(a, quantity); /// Output
 
-                if (!do_you_want_to_continue())
-                    break;
+                    if (!do_you_want_to_continue())
+                        break;
+                }
+            }
+            else
+            {
+                while (1)
+                {
+                    cout << "Please, enter number of elements of array with char" << endl;
+                    int n;
+                    cin >> n; /// Input
+                    cout << "Please, enter the elements of array with char" << endl;
+                    char *c = new char [n]; /// array with char
+                    for (int i = 0; i < n; i++)
+                        cin >> c[i];
+                    int quantity; /// quantity of constants
+                    int *a; /// array with constants
+                    a = search_of_decimal_constants_char6(c, n, quantity); /// Processing
+
+                    cout << "Array with decimal constants:" << endl;
+                    cout_array(a, quantity); /// Output
+
+                    if (!do_you_want_to_continue())
+                        break;
+                }
             }
             break;
         }
