@@ -1,0 +1,102 @@
+#include <iostream>
+#include "Complex.h"
+
+using namespace std;
+
+bool Comparing (Complex C1, Complex C2)
+{
+    double C1Re = C1.Get_Re();
+    double C1Im = C1.Get_Im();
+    double C2Re = C2.Get_Re();
+    double C2Im = C2.Get_Im();
+    return C1Re * C1Re + C1Im * C1Im > C2Re * C2Re + C2Im * C2Im;
+}
+
+int main8()
+{
+    cout << "1. Class 'Complex number': constructors by default and for copying, addition, giving, comparing (modulus of a vector); testing for array with complex numbers; the class interface in heading the file; function for comparing (parameters: complex numbers)" << endl;
+    cout << "2. Class 'Stack for complex numbers'" << endl;
+
+    while (do_you_want_to_continue())
+    {
+        int number = 0;
+        cout << "Please, enter the number of task ( 1, 2 )" << endl;
+        while (number == 0)
+        {
+            cin >> number;
+            if (number < 1 || number > 2)
+            {
+                cout << "Incorrect number" << endl;
+                number = 0;
+            }
+        }
+        switch (number)
+        {
+            case 1:
+            {
+                int n;
+                cout << "Please, enter the number of elements of array of complex numbers" << endl;
+                cin >> n;
+                Complex *C = new Complex [n];
+                cout << "Please, enter the elements of array of complex numbers (Re1 Im1 Re2 Im2 ...)" << endl;
+                double Re, Im;
+                for (int i = 0; i < n; i++)
+                {
+                    cin >> Re >> Im;
+                    C[i].Give(Re, Im);
+                }
+
+                /// Test 1: Addition
+                Complex SumC(0,0);
+                for (int i = 0; i < n; i++)
+                {
+                    SumC.Add(C[i]);
+                }
+                cout << "Sum: ";
+                SumC.Print();
+                cout << endl;
+
+                /// Test 2: Giving
+                cout << "Cloned array: ";
+                Complex *CC = new Complex [n];
+                for (int i = 0; i < n; i++)
+                {
+                    CC[i].Give(C[i]);
+                    CC[i].Print();
+                    cout << "; ";
+                }
+                cout << endl;
+
+                /// Test 3.1: Comparing 1
+                Complex maxC = C[0];
+                for (int i = 1; i < n; i++)
+                {
+                    if (C[i].Compare(maxC))
+                        maxC.Give(C[i]);
+                }
+                cout << "Max: ";
+                maxC.Print();
+                cout << endl;
+
+                /// Test 3.2: Comparing 2
+                Complex minC = C[0];
+                for (int i = 1; i < n; i++)
+                {
+                    if (Comparing(minC, C[i]))
+                        minC.Give(C[i]);
+                }
+                cout << "Min: ";
+                minC.Print();
+                cout << endl;
+                break;
+            }
+            case 2:
+            {
+
+                break;
+            }
+        }
+    }
+    return 0;
+}
+
