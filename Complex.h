@@ -1,10 +1,3 @@
-#ifndef COMPLEX_H_INCLUDED
-#define COMPLEX_H_INCLUDED
-
-
-
-#endif // COMPLEX_H_INCLUDED
-
 class Complex
 {
     double Re; /// real
@@ -17,8 +10,8 @@ class Complex
         double Get_Re(){return Re;}
         double Get_Im(){return Im;}
         void Add(Complex);               /// addition
-        void Give(double, double);       /// giving 1
-        void Give(Complex);              /// giving 2
+        void Set(double, double);       /// setting 1
+        void Set(Complex);              /// setting 2
         bool Compare(Complex);           /// comparing
         void Print();                    /// output
         ~Complex(){};                    /// destructor
@@ -42,13 +35,13 @@ void Complex :: Add(Complex C)
     Im += C.Im;
 }
 
-void Complex :: Give (double Real, double Imaginary)
+void Complex :: Set (double Real, double Imaginary)
 {
     Re = Real;
     Im = Imaginary;
 }
 
-void Complex :: Give (Complex C)
+void Complex :: Set (Complex C)
 {
     Re = C.Re;
     Im = C.Im;
