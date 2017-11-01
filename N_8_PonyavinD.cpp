@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Complex.h"
+#include "StackComplex.h""
 
 using namespace std;
 
@@ -12,9 +13,17 @@ bool Comparing (Complex C1, Complex C2)
     return C1Re * C1Re + C1Im * C1Im > C2Re * C2Re + C2Im * C2Im;
 }
 
+bool CheckAnswer ()
+{
+    string answer;
+    cout << "If you want to exit, enter EXIT. Else enter other symbol" << endl;
+    cin >> answer;
+    return answer != "EXIT";
+}
+
 int main8()
 {
-    cout << "1. Class 'Complex number': constructors by default and for copying, addition, giving, comparing (modulus of a vector); testing for array with complex numbers; the class interface in heading the file; function for comparing (parameters: complex numbers)" << endl;
+    cout << "1. Class 'Complex number': constructors by default and for copying, addition, setting, comparing (modulus of a vector); testing for array with complex numbers; the class interface in heading the file; function for comparing (parameters: complex numbers)" << endl;
     cout << "2. Class 'Stack for complex numbers'" << endl;
 
     while (do_you_want_to_continue())
@@ -43,7 +52,7 @@ int main8()
                 for (int i = 0; i < n; i++)
                 {
                     cin >> Re >> Im;
-                    C[i].Give(Re, Im);
+                    C[i].Set(Re, Im);
                 }
 
                 /// Test 1: Addition
@@ -61,7 +70,7 @@ int main8()
                 Complex *CC = new Complex [n];
                 for (int i = 0; i < n; i++)
                 {
-                    CC[i].Give(C[i]);
+                    CC[i].Set(C[i]);
                     CC[i].Print();
                     cout << "; ";
                 }
@@ -72,7 +81,7 @@ int main8()
                 for (int i = 1; i < n; i++)
                 {
                     if (C[i].Compare(maxC))
-                        maxC.Give(C[i]);
+                        maxC.Set(C[i]);
                 }
                 cout << "Max: ";
                 maxC.Print();
@@ -83,7 +92,7 @@ int main8()
                 for (int i = 1; i < n; i++)
                 {
                     if (Comparing(minC, C[i]))
-                        minC.Give(C[i]);
+                        minC.Set(C[i]);
                 }
                 cout << "Min: ";
                 minC.Print();
@@ -92,7 +101,24 @@ int main8()
             }
             case 2:
             {
+                StackComplex S;
+                cout << "Please, enter the elements of stack with complex numbers (Re1 Im1 Re2 Im2 ...)" << endl;
+                double Re, Im;
+                while (CheckAnswer())
+                {
+                    cin >> Re >> Im;
+                    S.push(Re, Im);
+                }
+                cout << "Top: ";
+                if (!S.empty())
+                    S.top().Print();
+                else
+                    cout << "This stack is empty";
+                cout << endl;
 
+                cout << "Stack without top element: ";
+                S.pop();
+                S.print();
                 break;
             }
         }
