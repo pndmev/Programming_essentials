@@ -274,6 +274,8 @@ void delete_array_2 (int** a , int n)
         delete a[i];
 }
 
+
+
 struct Node_char
 {
     char data;
@@ -320,6 +322,11 @@ void delete_last_element_My_stack_char (My_stack_char& s)
 void delete_last_element_My_stack_int (My_stack_int& s)
 {
     s.ptr = s.ptr -> next;
+}
+
+char giv_top_element (My_stack_char& s)
+{
+    return s.ptr -> data;
 }
 
 My_stack_char create_My_stack_char()
