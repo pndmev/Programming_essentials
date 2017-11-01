@@ -2,6 +2,70 @@
 
 using namespace std;
 
+void add_stack_array_char (char* c, int &top, char data)
+{
+    top++;
+    c[top] = data;
+}
+
+void delete_last_element_stack_array_char(char* c, int &top)
+{
+    top--;
+}
+
+char giv_top_element_stack_array_char(char* c, int &top)
+{
+    return c[top];
+}
+
+bool are_brackets_placed_correct_stack_array(string str)
+{
+    int n = str_size(str);
+    char* s = new char [n];
+    int top = -1;
+    add_stack_array_char(s, top, '|');
+
+    for (int i = 0; i < n; i++)
+    {
+        switch (str[i])
+        {
+            case '(': case '[': case '{':
+            {
+                add_stack_array_char(s, top, str[i]);
+                break;
+            }
+            case ')':
+            {
+                if (giv_top_element_stack_array_char(s, top) == '(')
+                    delete_last_element_stack_array_char(s, top);
+                else
+                    return false;
+                break;
+            }
+            case ']':
+            {
+                if (giv_top_element_stack_array_char(s, top) == '[')
+                    delete_last_element_stack_array_char(s, top);
+                else
+                    return false;
+                break;
+            }
+            case '}':
+            {
+                if (giv_top_element_stack_array_char(s, top) == '{')
+                    delete_last_element_stack_array_char(s, top);
+                else
+                    return false;
+                break;
+            }
+        }
+    }
+    if (giv_top_element_stack_array_char(s, top) == '|')
+        return true;
+    else
+        return false;
+}
+
 bool are_brackets_placed_correct (string str)
 {
     My_stack_char s;
@@ -18,7 +82,7 @@ bool are_brackets_placed_correct (string str)
             }
             case ')':
             {
-                if (s.ptr -> data == '(')
+                if (giv_top_element(s) == '(')
                     delete_last_element_My_stack_char(s);
                 else
                     return false;
@@ -26,7 +90,7 @@ bool are_brackets_placed_correct (string str)
             }
             case ']':
             {
-                if (s.ptr -> data == '[')
+                if (giv_top_element(s) == '[')
                     delete_last_element_My_stack_char(s);
                 else
                     return false;
@@ -34,7 +98,7 @@ bool are_brackets_placed_correct (string str)
             }
             case '}':
             {
-                if (s.ptr -> data == '{')
+                if (giv_top_element(s) == '{')
                     delete_last_element_My_stack_char(s);
                 else
                     return false;
@@ -42,7 +106,7 @@ bool are_brackets_placed_correct (string str)
             }
         }
     }
-    if (s.ptr -> data == '|')
+    if (giv_top_element(s) == '|')
         return true;
     else
         return false;
@@ -298,7 +362,7 @@ int main7()
             cout << "Please, enter the mathematical expression" << endl;
             cin >> str; /// Input
 
-            if (are_brackets_placed_correct(str))
+            if (are_brackets_placed_correct_stack_array(str))
                 cout << "Brackets are placed correct" << endl;
             else
                 cout << "Brackets aren't placed correct" << endl;
