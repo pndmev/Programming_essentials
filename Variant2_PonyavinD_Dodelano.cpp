@@ -220,7 +220,22 @@ int main()
             for (int i = 0; i < m; i++)
                 b[i] = a[arrayIndex[i]];
 
+            cout << endl;
             cout_array_2(b, m, n);
+
+            for (int i = 0; i < m; i++)
+            {
+                delete a[i];
+                delete b[i];
+            }
+
+            delete a;
+            delete b;
+
+            delete sum;
+            delete copySum;
+            delete arrayIndex;
+
             break;
         }
     }
