@@ -212,6 +212,7 @@ int main()
                     }
             }
 
+            cout << endl;
             int **b = new int* [m];
             for (int i = 0; i < m; i++)
                 b[i] = a[arrayIndex[i]];
