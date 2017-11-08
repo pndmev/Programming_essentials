@@ -58,7 +58,7 @@ void deleting (char *str, int& strSize, int &length)
             flag = false;
             for (int j = 0; j < 21; j++)
             {
-                if (str[i] == agreeSymbols[j])
+                if (str[i] == agreeSymbols[j] || str[i] == agreeSymbols[j] - 32)
                 {
                     flag = true;
                     break;
@@ -69,13 +69,17 @@ void deleting (char *str, int& strSize, int &length)
                 flag = false;
                 if (i + length <= strSize)
                 {
-                    for (int j = i + 1; j < i + length; j++)
+                    for (int j = i + 1; j < i + length + 1; j++)
                     {
                         flag = check_symbol(str[j]);
-
-                        if (j != i + length - 1 && flag)
+                        if (j != i + length && flag)
                         {
                             flag = false;
+                            break;
+                        }
+                        if (j == strSize - 1)
+                        {
+                            flag = true;
                             break;
                         }
                     }
@@ -212,7 +216,6 @@ int main()
                     }
             }
 
-            cout << endl;
             int **b = new int* [m];
             for (int i = 0; i < m; i++)
                 b[i] = a[arrayIndex[i]];
