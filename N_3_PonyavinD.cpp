@@ -276,12 +276,14 @@ int main3()
                 bool isLeapYear1 = is_leap_year(y1);
                 bool isLeapYear2 = is_leap_year(y2);
                 /// The number of days from the begin of year of birth
+                bool isNotLeapYear1 = !isLeapYear1;
                 for (i = 0; i < m1-1; i++)
-                    subproduct1+= month[!isLeapYear1][i];
+                    subproduct1+= month[isNotLeapYear1][i];
                 subproduct1 += d1;
                 /// The number of days from the begin of current year
+                bool isNotLeapYear2 = !isLeapYear2;
                 for (i = 0; i < m2-1; i++)
-                    subproduct2 += month[!isLeapYear2][i];
+                    subproduct2 += month[isNotLeapYear2][i];
                 subproduct2 += d2;
                 /// Sum of days in intermediate years
                 for (i = y1 + 1; i < y2; i++)
