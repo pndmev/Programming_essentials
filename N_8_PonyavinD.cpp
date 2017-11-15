@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Complex.h"
-#include "StackComplex.h""
+#include "Stack.h"
 
 using namespace std;
 
@@ -101,13 +101,14 @@ int main8()
             }
             case 2:
             {
-                StackComplex S;
+                Stack <Complex> S;
                 cout << "Please, enter the elements of stack with complex numbers (Re1 Im1 Re2 Im2 ...)" << endl;
                 double Re, Im;
                 while (CheckAnswer())
                 {
                     cin >> Re >> Im;
-                    S.push(Re, Im);
+                    Complex C(Re, Im);
+                    S.push(C);
                 }
                 cout << "Top: ";
                 if (!S.empty())
@@ -118,7 +119,19 @@ int main8()
 
                 cout << "Stack without top element: ";
                 S.pop();
-                S.print();
+                int sizeStack = S.size();
+                if (!S.empty())
+                {
+                    for (int i = 0; i < sizeStack; i++)
+                    {
+                        S.top().Print();
+                        cout << "; ";
+                        S.pop();
+                    }
+                    cout << endl;
+                }
+                else
+                    cout << "This stack is empty" << endl;
                 break;
             }
         }
