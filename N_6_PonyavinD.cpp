@@ -54,62 +54,75 @@ int* shaker_sort6 (int *a, int &n)
     return b;
 }
 
-int* search_median6 (int *a, int &n)
+void function_for_search_of_median6 (int* a, int n, int center, int& position)
 {
-    int *b = copy_array(a, n);
-    shaker_sort(b, n);
-    int *median = new int [1];
-    median = b + (n - 1)/2;
-    delete_array(b);
-    n = 1;
-    cout << "Median of array: " << endl;
-    return median;
+    int left = 0;
+    int right = n - 1;
+    int middle = (left + right) / 2;
+    int quantityElementsRight = middle;
+    while (right >= left)
+    {
+        while (a[right] > a[middle])
+            right--;
+        while (a[left] < a[middle])
+            left++;
+        if (left <= right)
+        {
+            my_swap(a[left], a[right]);
+            quantityElementsRight += ((left == middle) - (right == middle)) * (right - left);
+            left++;
+            right--;
+        }
+    }
+    if (quantityElementsRight == center)
+    {
+        position += quantityElementsRight;
+        return;
+    }
+    if (quantityElementsRight > center)
+    {
+        function_for_search_of_median6 (a, quantityElementsRight + 1, center, position);
+    }
+    else
+    {
+        position += quantityElementsRight;
+        function_for_search_of_median6 (a + quantityElementsRight, n - quantityElementsRight, center - quantityElementsRight, position);
+    }
 }
 
-int** insert_row(int **a, int *x, int position, int &nRowA, int &nColumnA)
+int* search_of_median6 (int *a, int &n)
+{
+    int center = (n - 1) / 2;
+    int position = 0;
+    function_for_search_of_median6(a, n, center, position);
+    n = 1;
+    return a + position;
+}
+
+int** insert_row(int **a, int *x, int position, int &nRowA, int nColumnA)
 {
     nRowA++;
     int** b = new int* [nRowA];
-    for (int i = 0; i < nRowA; i++)
-        b[i] = new int [nColumnA];
-    for (int i = 0; i < nRowA; i++)
-    {
-        if (i < position)
-        {
-            b[i] = a[i];
-        }
-        else
-            if (i == position)
-            {
-                for (int j = 0; j < nColumnA; j++)
-                    b[i][j] = x[j];
-            }
-            else
-            {
-                b[i] = a[i - 1];
-            }
-    }
+    int i;
+    for (i = 0; i < position; i++)
+        b[i] = a[i];
+    b[i] = x;
+    for (i = i + 1; i < nRowA; i++)
+        b[i] = a[i - 1];
+    delete a;
     return b;
 }
 
-int** delete_row(int **a, int *x, int position, int &nRowA, int &nColumnA)
+int** delete_row(int **a, int *x, int position, int &nRowA, int nColumnA)
 {
     nRowA--;
     int** b = new int* [nRowA];
-    for (int i = 0; i < nRowA; i++)
-        b[i] = new int [nColumnA];
     delete_array(a[position]);
-    for (int i = 0; i < nRowA; i++)
-    {
-        if (i < position)
-        {
-            b[i] = a[i];
-        }
-        else
-        {
-            b[i] = a[i + 1];
-        }
-    }
+    for (int i = 0; i < position; i++)
+        b[i] = a[i];
+    for (int i = i; i < nRowA; i++)
+        b[i] = a[i + 1];
+    delete a;
     return b;
 }
 
@@ -118,7 +131,7 @@ bool check_char_digit6 (char c)
     return c > 47 && c < 58;
 }
 
-bool check_char_digit_and_point6 (char c)
+bool check_char_digit_or_point6 (char c)
 {
     return  c == '.' || (c > 47 && c < 58);
 }
@@ -259,13 +272,13 @@ double* search_of_real_constants6 (string s, int &quantity)
     quantity = 0;
     for (int i = 0; i < sSize; i++)
     {
-        while (s[i] == '.' && !(check_char_digit6(s[i-1]) && i > 0 || check_char_digit6(s[i+1]) && i < sSize - 1))
+        while (s[i] == '.' && !(i > 0 && check_char_digit6(s[i-1]) || i < sSize - 1 && check_char_digit6(s[i+1])))
             i++;
-        if (check_char_digit_and_point6(s[i]))
+        if (check_char_digit_or_point6(s[i]))
         {
-            bool flag = true;
+            bool isDigitOrPoint = true;
             counter = 0;
-            while (flag)
+            while (isDigitOrPoint)
             {
                 if (s[i] == '.')
                 {
@@ -279,7 +292,7 @@ double* search_of_real_constants6 (string s, int &quantity)
                 }
                 StringWithConst += s[i];
                 i++;
-                flag = check_char_digit_and_point6(s[i]);
+                isDigitOrPoint = check_char_digit_or_point6(s[i]);
             }
             StringWithConst += " ";
             quantity++;
@@ -348,7 +361,7 @@ int main6()
                     }
                     case '3':
                     {
-                        f = search_median6;
+                        f = search_of_median6;
                         break;
                     }
                     default:
@@ -377,7 +390,7 @@ int main6()
                 int **a = cin_array_2(nRowA, nColumnA); /// input array
                 int *x; /// row for insert
                 int position; /// position of insert OR position of delete
-                int** (*f)(int**, int*, int, int&, int&); /// pointer for functions
+                int** (*f)(int**, int*, int, int&, int); /// pointer for functions
                 cout << "1) Insert row; 2) Delete row. Please, enter 1 or 2" << endl;
                 char answer;
                 cin >> answer;
@@ -393,10 +406,11 @@ int main6()
                             cin >> x[i];
                         cout << "Please, enter the number of position of this row in array" << endl;
                         cin >> position;
-                        if (position < 0 || position > nRowA - 1)
+                        while (position < 0 || position > nRowA)
                         {
-                            cout << "Incorrect" << endl;
-                            return 0;
+                            cout << "Incorrect position (position >= 0 and position <= " << nRowA << ")" << endl;
+                            cout << "Please, enter the number of position of this row in array" << endl;
+                            cin >> position;
                         }
                         break;
                     }
@@ -405,7 +419,7 @@ int main6()
                         f = delete_row;
                         cout << "Please, enter number of row for deleting" << endl;
                         cin >> position;
-                        if (position < 0 || position > nRowA - 1)
+                        if (position < 0 || position > nRowA - 1) /// TODO
                         {
                             cout << "Incorrect" << endl;
                             return 0;
