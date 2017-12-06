@@ -1,15 +1,15 @@
 class Complex
 {
-    double Re; /// real
-    double Im; /// imaginary
-
     public:
+        double Re; /// real
+        double Im; /// imaginary
         Complex(){;};                    /// constructor by default
         Complex(double, double);         /// constructor with parameters
         Complex(const Complex& C);       /// constructor for copying
         double Get_Re(){return Re;}
         double Get_Im(){return Im;}
         void Add(Complex);               /// addition
+        void Sub(Complex);               /// subtraction
         void Set(double, double);       /// setting 1
         void Set(Complex);              /// setting 2
         bool Compare(Complex);           /// comparing
@@ -33,6 +33,12 @@ void Complex :: Add(Complex C)
 {
     Re += C.Re;
     Im += C.Im;
+}
+
+void Complex :: Sub(Complex C)
+{
+    Re -= C.Re;
+    Im -= C.Im;
 }
 
 void Complex :: Set (double Real, double Imaginary)
