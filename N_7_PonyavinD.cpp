@@ -1,29 +1,12 @@
 #include <iostream>
+#include "StackStructArray.h"
 
 using namespace std;
 
-void add_stack_array_char (char* c, int &top, char data)
-{
-    top++;
-    c[top] = data;
-}
-
-void delete_last_element_stack_array_char(char* c, int &top)
-{
-    top--;
-}
-
-char giv_top_element_stack_array_char(char* c, int &top)
-{
-    return c[top];
-}
-
-bool are_brackets_placed_correct_stack_array(string str)
+bool are_brackets_placed_correct(string str)
 {
     int n = str_size(str);
-    char* s = new char [n];
-    int top = -1;
-    add_stack_array_char(s, top, '|');
+    StackStructArray <char> S;
 
     for (int i = 0; i < n; i++)
     {
@@ -31,91 +14,59 @@ bool are_brackets_placed_correct_stack_array(string str)
         {
             case '(': case '[': case '{':
             {
-                add_stack_array_char(s, top, str[i]);
+                push(S, str[i]);
                 break;
             }
             case ')':
             {
-                if (giv_top_element_stack_array_char(s, top) == '(')
-                    delete_last_element_stack_array_char(s, top);
+                if (top(S) == '(')
+                    pop(S);
                 else
                     return false;
                 break;
             }
             case ']':
             {
-                if (giv_top_element_stack_array_char(s, top) == '[')
-                    delete_last_element_stack_array_char(s, top);
+                if (top(S) == '[')
+                    pop(S);
                 else
                     return false;
                 break;
             }
             case '}':
             {
-                if (giv_top_element_stack_array_char(s, top) == '{')
-                    delete_last_element_stack_array_char(s, top);
+                if (top(S) == '{')
+                    pop(S);
                 else
                     return false;
                 break;
             }
         }
     }
-    if (giv_top_element_stack_array_char(s, top) == '|')
+    if (empty(S) == true)
         return true;
     else
         return false;
 }
 
-bool are_brackets_placed_correct (string str)
+bool isNextSymbolBracketOrAsteriskOrSlashOrEnd (int iSymbol, char symbol, int size)
 {
-    My_stack_char s;
-    add_My_stack_char(s, '|');
-    int SizeOfString = str_size(str);
-    for (int i = 0; i < SizeOfString; i++)
-    {
-        switch (str[i])
-        {
-            case '(': case '[': case '{':
-            {
-                add_My_stack_char(s, str[i]);
-                break;
-            }
-            case ')':
-            {
-                if (giv_top_element(s) == '(')
-                    delete_last_element_My_stack_char(s);
-                else
-                    return false;
-                break;
-            }
-            case ']':
-            {
-                if (giv_top_element(s) == '[')
-                    delete_last_element_My_stack_char(s);
-                else
-                    return false;
-                break;
-            }
-            case '}':
-            {
-                if (giv_top_element(s) == '{')
-                    delete_last_element_My_stack_char(s);
-                else
-                    return false;
-                break;
-            }
-        }
-    }
-    if (giv_top_element(s) == '|')
-        return true;
-    else
-        return false;
+    return iSymbol >= size || symbol == ')' || symbol == ']' || symbol == '}' || symbol == '*' || symbol == '/';
+}
+
+bool isPrevSymbolBracketOrBegin (int iSymbol, char symbol)
+{
+    return iSymbol < 0 || symbol == '(' || symbol == '[' || symbol == '{';
+}
+
+bool isSymbolDigit (char symbol)
+{
+    return symbol > 47 && symbol < 58;
 }
 
 bool is_it_mathematical_expression (string str)
 {
     int SizeOfString = str_size(str);
-    int QuantityOperators = 1;
     int QuantityNumbers = 0;
     for (int i = 0; i < SizeOfString; i++)
     {
@@ -123,39 +74,37 @@ bool is_it_mathematical_expression (string str)
         {
             case '+': case '-':
             {
-                QuantityOperators++;
-                if (i + 1 >= SizeOfString || str[i + 1] == ')' || str[i + 1] == ']' || str[i + 1] == '}' || (str[i + 1] == '-' || str[i + 1] == '+') && (i + 2 >= SizeOfString || str[i + 2] < 47 || str[i + 2] > 58))
+                if (isNextSymbolBracketOrAsteriskOrSlashOrEnd(i + 1, str[i + 1], SizeOfString) || (str[i + 1] == '-' || str[i + 1] == '+') && (i + 2 >= SizeOfString || !isSymbolDigit(str[i + 2])))
                     return false;
                 break;
             }
             case '*': case '/':
             {
-                QuantityOperators++;
-                if (i + 1 >= SizeOfString || str[i + 1] == ')' || str[i + 1] == ']' || str[i + 1] == '}' || str[i + 1] == '*' || str[i + 1] == '/')
+                if (isNextSymbolBracketOrAsteriskOrSlashOrEnd(i + 1, str[i + 1], SizeOfString))
                     return false;
-                if (i - 1 < 0 || str[i - 1] == '(' || str[i - 1] == '[' || str[i - 1] == '{')
+                if (isPrevSymbolBracketOrBegin(i - 1, str[i - 1]))
                     return false;
                 break;
             }
             case '(': case '[': case '{':
             {
-                if (str[i + 1] == ')' || str[i + 1] == ']' || str[i + 1] == '}')
+                if (isNextSymbolBracketOrAsteriskOrSlashOrEnd(i + 1, str[i + 1], SizeOfString))
                     return false;
-                if (str[i - 1] >= 48 && str[i - 1] <= 57)
+                if (isSymbolDigit(str[i - 1]))
                     return false;
                 break;
             }
             case ')': case ']': case '}':
             {
-                if (str[i + 1] == '(' || str[i + 1] == '[' || str[i + 1] == '{')
+                if (isPrevSymbolBracketOrBegin(i - 1, str[i - 1]))
                     return false;
-                if (str[i + 1] >= 47 && str[i + 1] <= 58)
+                if (isSymbolDigit(str[i + 1]))
                     return false;
                 break;
             }
             default:
             {
-                if (str[i] < 48 || str[i] > 57)
+                if (!isSymbolDigit(str[i]))
                     return false;
                 else
                     QuantityNumbers++;
@@ -163,30 +112,36 @@ bool is_it_mathematical_expression (string str)
             }
         }
     }
-    if (QuantityNumbers * QuantityOperators == 0)
+    if (QuantityNumbers == 0)
         return false;
     return true;
 }
 
 bool check_mathematical_expression (string str)
 {
-    if (!is_it_mathematical_expression(str))
-    {
-        cout << "It isn't mathematical expression" << endl;
-        return false;
-    }
     if (!are_brackets_placed_correct(str))
     {
         cout << "Brackets aren't placed correct" << endl;
         return false;
     }
+    if (!is_it_mathematical_expression(str))
+    {
+        cout << "It isn't mathematical expression" << endl;
+        return false;
+    }
     return true;
+}
+
+void modificationResultString (string &resultString, StackStructArray <char> &S)
+{
+    resultString += top(S);
+    resultString += " ";
+    pop(S);
 }
 
 string reverse_Polish_notation(string str)
 {
-    My_stack_char s; /// stack with operators
-    add_My_stack_char(s, '|');
+    StackStructArray <char> S;
     string resultString;
     int sizeStr = str_size(str);
     for (int i = 0; i < sizeStr; i++)
@@ -215,71 +170,61 @@ string reverse_Polish_notation(string str)
             {
                 case '+': case '-':
                 {
-                    while (s.ptr -> data == '+' || s.ptr -> data == '-' || s.ptr -> data == '*' || s.ptr -> data == '/')
+                    while (top(S) == '+' || top(S) == '-' || top(S) == '*' || top(S) == '/')
                     {
-                        resultString += s.ptr -> data;
-                        resultString += " ";
-                        delete_last_element_My_stack_char(s);
+                        modificationResultString(resultString, S);
                     }
-                    add_My_stack_char(s, str[i]);
+                    push(S, str[i]);
                     break;
                 }
                 case '*': case '/':
                 {
-                    while (s.ptr -> data == '*' || s.ptr -> data == '/')
+                    while (top(S) == '*' || top(S) == '/')
                     {
-                        resultString += s.ptr -> data;
-                        resultString += " ";
-                        delete_last_element_My_stack_char(s);
+                        modificationResultString(resultString, S);
                     }
-                    add_My_stack_char(s, str[i]);
+                    push(S, str[i]);
                     break;
                 }
                 case '(': case '[': case '{':
                 {
-                    add_My_stack_char(s, str[i]);
+                    push(S, str[i]);
                     break;
                 }
                 case ')':
                 {
-                    while (s.ptr -> data != '(')
+                    while (top(S) != '(')
                     {
-                        resultString += s.ptr -> data;
-                        resultString += " ";
-                        delete_last_element_My_stack_char(s);
+                        modificationResultString(resultString, S);
                     }
-                    delete_last_element_My_stack_char(s);
+                    pop(S);
                     break;
                 }
                 case ']':
                 {
-                    while (s.ptr -> data != '[')
+                    while (top(S) != '[')
                     {
-                        resultString += s.ptr -> data;
-                        resultString += " ";
-                        delete_last_element_My_stack_char(s);
+                        modificationResultString(resultString, S);
                     }
-                    delete_last_element_My_stack_char(s);
+                    pop(S);
                     break;
                 }
                 case '}':
                 {
-                    while (s.ptr -> data != '{')
+                    while (top(S) != '{')
                     {
-                        resultString += s.ptr -> data;
-                        resultString += " ";
-                        delete_last_element_My_stack_char(s);
+                        modificationResultString(resultString, S);
                     }
-                    delete_last_element_My_stack_char(s);
+                    pop(S);
                     break;
                 }
             }
         }
     }
-    while (s.ptr -> data != '|')
+    while (!empty(S))
     {
-        resultString += s.ptr -> data;
-        delete_last_element_My_stack_char(s);
+        resultString += top(S);
+        pop(S);
     }
     return resultString;
 }
@@ -288,8 +233,7 @@ int calculation_mathematical_expression (string str)
 {
     str = reverse_Polish_notation(str);
     int sizeStr = str_size(str);
-    My_stack_int s;
-    s.ptr = 0;
+    StackStructArray <int> S;
     for (int i = 0; i < sizeStr; i++)
     {
         string bufer;
@@ -299,43 +243,42 @@ int calculation_mathematical_expression (string str)
             i++;
         }
         if (bufer != "")
-            add_My_stack_int(s, string_to_int(bufer));
+            push(S, string_to_int(bufer));
         else
         {
+            int x = top(S);
+            pop(S);
             switch (str[i])
             {
                 case '+':
                 {
-                    int x = s.ptr -> data;
-                    delete_last_element_My_stack_int(s);
-                    s.ptr -> data += x;
+                    x = top(S) + x;
+                    pop(S);
                     break;
                 }
                 case '-':
                 {
-                    int x = s.ptr -> data;
-                    delete_last_element_My_stack_int(s);
-                    s.ptr -> data -= x;
+                    x = top(S) - x;
+                    pop(S);
                     break;
                 }
                 case '*':
                 {
-                    int x = s.ptr -> data;
-                    delete_last_element_My_stack_int(s);
-                    s.ptr -> data *= x;
+                    x = top(S) * x;
+                    pop(S);
                     break;
                 }
                 case '/':
                 {
-                    int x = s.ptr -> data;
-                    delete_last_element_My_stack_int(s);
-                    s.ptr -> data /= x;
+                    x = top(S) / x;
+                    pop(S);
                     break;
                 }
             }
+            push(S, x);
         }
     }
-    return s.ptr -> data;
+    return top(S);
 }
 
 int main7()
@@ -362,7 +305,7 @@ int main7()
             cout << "Please, enter the mathematical expression" << endl;
             cin >> str; /// Input
 
-            if (are_brackets_placed_correct_stack_array(str))
+            if (are_brackets_placed_correct(str))
                 cout << "Brackets are placed correct" << endl;
             else
                 cout << "Brackets aren't placed correct" << endl;
