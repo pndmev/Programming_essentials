@@ -1,58 +1,60 @@
-template <typename T>
+/// Stack
+template <typename TS>
 class Stack
 {
-    struct Node
-    {
-        T data;
-        Node *next;
-    };
+    protected:
+        struct Node
+        {
+            TS data;
+            Node *next;
+        };
 
-    Node *ptr;
-    int sizeStack = 0;
+        Node *last;
+        //int sizeStack = 0;
 
     public:
-        Stack(){;};
-        void push(T);
+        Stack(){last = NULL;};
+        void push(TS);
         void pop();
-        T top();
+        TS top();
         bool empty();
-        int size();
+        //int size();
         ~Stack(){};
 };
 
-template <typename T>
-void Stack <T> :: push (T d)
+template <typename TS>
+void Stack <TS> :: push (TS d)
 {
     Node *newNode = new Node;
-    newNode -> next = ptr;
+    newNode -> next = last;
     newNode -> data = d;
-    ptr = newNode;
-    sizeStack++;
+    last = newNode;
+    //sizeStack++;
 }
 
-template <typename T>
-void Stack <T> :: pop ()
+template <typename TS>
+void Stack <TS> :: pop ()
 {
-    Node* temp = ptr;
-    ptr = ptr -> next;
+    Node* temp = last;
+    last = last -> next;
     delete temp;
-    sizeStack--;
+    //sizeStack--;
 }
 
-template <typename T>
-T Stack <T> :: top ()
+template <typename TS>
+TS Stack <TS> :: top ()
 {
-    return ptr -> data;
+    return last -> data;
 }
 
-template <typename T>
-bool Stack <T> :: empty ()
+template <typename TS>
+bool Stack <TS> :: empty ()
 {
-    return sizeStack == 0;
+    return last == NULL;
 }
 
-template <typename T>
-int Stack <T> :: size ()
+/*template <typename TS>
+int Stack <TS> :: size ()
 {
     return sizeStack;
-}
+}*/
