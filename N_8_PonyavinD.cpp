@@ -112,23 +112,20 @@ int main8()
                 }
                 cout << "Top: ";
                 if (!S.empty())
-                    S.top().Print();
-                else
-                    cout << "This stack is empty";
-                cout << endl;
-
-                cout << "Stack without top element: ";
-                S.pop();
-                int sizeStack = S.size();
-                if (!S.empty())
                 {
-                    for (int i = 0; i < sizeStack; i++)
+                    S.top().Print();
+                    cout << endl;
+                    cout << "Stack without top element: ";
+                    S.pop();
+                    while (!S.empty())
                     {
                         S.top().Print();
                         cout << "; ";
                         S.pop();
                     }
                     cout << endl;
+                    if (S.empty())
+                        cout << "This stack is empty" << endl;
                 }
                 else
                     cout << "This stack is empty" << endl;
