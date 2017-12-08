@@ -1,0 +1,11 @@
+ProductID	Name	UPS	Producer	Price	Period	Qty
+Product31	N1	311	Producer7	13.99	19	500	
+Product04	N3	143	Producer1	41.30	35	400	
+Product92	N1	921	Producer3	29.10	19	300	
+Product17	N3	173	Producer5	73.99	56	200	
+Product06	N1	161	Producer2	61.15	34	100	
+Product73	N3	733	Producer5	13.99	28	100	
+Product01	N2	112	Producer6	90.56	15	200	
+Product68	N3	683	Producer3	18.19	83	300	
+Product49	N2	492	Producer2	41.30	14	400	
+Product02	N3	123	Producer4	36.15	27	500	

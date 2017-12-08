@@ -1,0 +1,49 @@
+a) 
+Name	Price	Qty	Period	ProductID	UPC	Producer	
+N3	13.99	100	28	Product73	733	Producer5	
+N3	18.19	300	83	Product68	683	Producer3	
+N3	36.15	500	27	Product02	123	Producer4	
+N3	41.3	400	35	Product04	143	Producer1	
+N3	73.99	200	56	Product17	173	Producer5	
+
+b) 
+Name	Price	
+N1	34.7467	
+N2	65.93	
+N3	36.724	
+
+c) 
+Producer	Qty	
+Producer1	1	
+Producer2	2	
+Producer3	2	
+Producer4	1	
+Producer5	1	
+Producer6	1	
+Producer7	1	
+
+d) 45
+Name	Price	Qty	Period	ProductID	UPC	Producer	
+N2	41.3	400	14	Product49	492	Producer2	
+
+e) 
+Price	Name	ProductID	UPC	Producer	
+13.99	N1	Product31	311	Producer7	
+13.99	N3	Product73	733	Producer5	
+18.19	N3	Product68	683	Producer3	
+29.1	N1	Product92	921	Producer3	
+36.15	N3	Product02	123	Producer4	
+41.3	N2	Product49	492	Producer2	
+41.3	N3	Product04	143	Producer1	
+61.15	N1	Product06	161	Producer2	
+73.99	N3	Product17	173	Producer5	
+90.56	N2	Product01	112	Producer6	
+
+f) 
+Period	Qty	Name	ProductID	UPC	Producer	
+27	500	N3	Product02	123	Producer4	
+28	100	N3	Product73	733	Producer5	
+34	100	N1	Product06	161	Producer2	
+35	400	N3	Product04	143	Producer1	
+56	200	N3	Product17	173	Producer5	
+83	300	N3	Product68	683	Producer3	
