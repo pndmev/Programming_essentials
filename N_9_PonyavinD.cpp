@@ -138,27 +138,33 @@ void printNewProduct (Product P, string code)
 void printListProduct (List <Product> L, string code)
 {
     int s = L.size();
+    if (!s)
+    {
+        cout << "This list is empty" << endl;
+        fout << "This list is empty" << endl;
+        return;
+    }
     Product P;
     printNewProduct(P, "-"+code);
     for (int i = 0; i < s; i++)
         printNewProduct(L.element(i), code);
 }
 
-bool alphabetS1S2 (string s1, string s2)
+int alphabetS1S2 (string s1, string s2)
 {
-    int ss1 = str_size(s1);
-    int ss2 = str_size(s2);
-    int ss = ss2;
-    if (ss1 < ss2)
-        ss = ss1;
-    for (int i = 0; i < ss; i++)
-    {
+    int resultCompare;
+    int sizeS1 = s1.size();
+    int i = 0;
+    while (s1[i] == s2[i])
+        i++;
+    if (i == sizeS1)
+        resultCompare = 0;
+    else
         if (s1[i] < s2[i])
-            return true;
-        if (s1[i] > s2[i])
-            return false;
-    }
-    return true;
+            resultCompare = -1;
+        else
+            resultCompare = 1;
+    return resultCompare;
 }
 
 void swapInList (List <Product> &L, Product bufer1, Product bufer2, int i1, int i2)
@@ -167,30 +173,48 @@ void swapInList (List <Product> &L, Product bufer1, Product bufer2, int i1, int 
     L.new_data(bufer1, i2);
 }
 
-void sortPrice (List <Product> &L)
+int comparator (Product P1, Product P2, char code)
 {
-    int n = L.size();
-    int left = 0;
-    int right = n - 1;
-    for (left = 0; left < right; left++)
+    int resultCompare = 0;
+    switch (code)
     {
-        for (int i = left; i < right; i++)
+        case '1':
         {
-            Product bufer1 = L.element(i), bufer2 = L.element(i + 1);
-            if (bufer1.Price > bufer2.Price)
-                swapInList(L, bufer1, bufer2, i, i + 1);
+            resultCompare = alphabetS1S2(P1.Name, P2.Name);
+            break;
         }
-        right--;
-        for (int i = right; i > left; i--)
+        case '3':
         {
-            Product bufer1 = L.element(i), bufer2 = L.element(i - 1);
-            if (bufer1.Price < bufer2.Price)
-                swapInList(L, bufer1, bufer2, i, i - 1);
+            resultCompare = alphabetS1S2(P1.Producer, P2.Producer);
+            break;
+        }
+        case '4':
+        {
+            if (P1.Price == P2.Price)
+                resultCompare = 0;
+            else
+                if (P1.Price < P2.Price)
+                    resultCompare = -1;
+                else
+                    resultCompare = 1;
+            break;
+        }
+        case '5':
+        {
+            if (P1.Period == P2.Period)
+                resultCompare = 0;
+            else
+                if (P1.Period < P2.Period)
+                    resultCompare = -1;
+                else
+                    resultCompare = 1;
+            break;
         }
     }
+    return resultCompare;
 }
 
-void sortPeriod (List <Product> &L)
+void sort (List <Product> &L, char code)
 {
     int n = L.size();
     int left = 0;
@@ -200,60 +224,14 @@ void sortPeriod (List <Product> &L)
         for (int i = left; i < right; i++)
         {
             Product bufer1 = L.element(i), bufer2 = L.element(i + 1);
-            if (bufer1.Period > bufer2.Period)
+            if (comparator(bufer1, bufer2, code) == 1)
                 swapInList(L, bufer1, bufer2, i, i + 1);
         }
         right--;
         for (int i = right; i > left; i--)
         {
             Product bufer1 = L.element(i), bufer2 = L.element(i - 1);
-            if (bufer1.Period < bufer2.Period)
-                swapInList(L, bufer1, bufer2, i, i - 1);
-        }
-    }
-}
-
-void sortName (List <Product> &L)
-{
-    int n = L.size();
-    int left = 0;
-    int right = n - 1;
-    for (left = 0; left < right; left++)
-    {
-        for (int i = left; i < right; i++)
-        {
-            Product bufer1 = L.element(i), bufer2 = L.element(i + 1);
-            if (!alphabetS1S2(bufer1.Name, bufer2.Name))
-                swapInList(L, bufer1, bufer2, i, i + 1);
-        }
-        right--;
-        for (int i = right; i > left; i--)
-        {
-            Product bufer1 = L.element(i), bufer2 = L.element(i - 1);
-            if (alphabetS1S2(bufer1.Name, bufer2.Name))
-                swapInList(L, bufer1, bufer2, i, i - 1);
-        }
-    }
-}
-
-void sortProducer (List <Product> &L)
-{
-    int n = L.size();
-    int left = 0;
-    int right = n - 1;
-    for (left = 0; left < right; left++)
-    {
-        for (int i = left; i < right; i++)
-        {
-            Product bufer1 = L.element(i), bufer2 = L.element(i + 1);
-            if (!alphabetS1S2(bufer1.Producer, bufer2.Producer))
-                swapInList(L, bufer1, bufer2, i, i + 1);
-        }
-        right--;
-        for (int i = right; i > left; i--)
-        {
-            Product bufer1 = L.element(i), bufer2 = L.element(i - 1);
-            if (alphabetS1S2(bufer1.Producer, bufer2.Producer))
+            if (comparator(bufer1, bufer2, code) == -1)
                 swapInList(L, bufer1, bufer2, i, i - 1);
         }
     }
@@ -269,26 +247,29 @@ void sortPriceName (List <Product> &L)
         for (int i = left; i < right; i++)
         {
             Product bufer1 = L.element(i), bufer2 = L.element(i + 1);
-            if (bufer1.Price > bufer2.Price)
+            int compareBufer = comparator(bufer1, bufer2, '4');
+            if (compareBufer == 1)
                 swapInList(L, bufer1, bufer2, i, i + 1);
             else
-                if (bufer1.Price == bufer2.Price && !alphabetS1S2(bufer1.Name, bufer2.Name))
+                if (compareBufer == 0 && comparator(bufer1, bufer2, '1') == 1)
                     swapInList(L, bufer1, bufer2, i, i + 1);
         }
         right--;
         for (int i = right; i > left; i--)
         {
             Product bufer1 = L.element(i), bufer2 = L.element(i - 1);
-            if (bufer1.Price < bufer2.Price)
+            int compareBufer = comparator(bufer1, bufer2, '4');
+            if (compareBufer == -1)
                 swapInList(L, bufer1, bufer2, i, i - 1);
-            if (bufer1.Price == bufer2.Price && alphabetS1S2(bufer1.Name, bufer2.Name))
-                swapInList(L, bufer1, bufer2, i, i - 1);
+            else
+                if (compareBufer == 0 && comparator(bufer1, bufer2, '1') == -1)
+                    swapInList(L, bufer1, bufer2, i, i - 1);
         }
     }
 }
 
 
-List <Product> NamePrice (List <Product> L, string NAME, double PRICE, bool Parameter)
+List <Product> NamePrice (List <Product> L, string NAME, bool Parameter, double PRICE = 0)
 {
     List <Product> NP;
     int s = L.size();
@@ -299,7 +280,7 @@ List <Product> NamePrice (List <Product> L, string NAME, double PRICE, bool Para
         if (bufer.Name == NAME && (Parameter || bufer.Price <= PRICE))
             NP.push_back(bufer);
     }
-    sortPrice(NP);
+    sort(NP, '4');
     return NP;
 }
 
@@ -314,12 +295,12 @@ int findInListString (string str, List <string> StrL)
 
 List <Product> a9 (List <Product> L, string NAME)
 {
-    return NamePrice(L, NAME, 0, true);
+    return NamePrice(L, NAME, true);
 }
 
 List <Product> d9 (List <Product> L, string NAME, double PRICE)
 {
-    return NamePrice(L, NAME, PRICE, false);
+    return NamePrice(L, NAME, false, PRICE);
 }
 
 List <Product> b9 (List <Product> L)
@@ -354,7 +335,7 @@ List <Product> b9 (List <Product> L)
         bufer.Price = SumL.element(i) / QuantityL.element(i);
         bL.push_back(bufer);
     }
-    sortName(bL);
+    sort(bL, '1');
     return bL;
 }
 
@@ -396,7 +377,7 @@ List <Product> c9 (List <Product> L)
         bufer.Quantity = sum;
         cL.push_back(bufer);
     }
-    sortProducer(cL);
+    sort(cL, '3');
     return cL;
 }
 
@@ -421,7 +402,7 @@ List <Product> f9 (List <Product> L, int PERIOD)
         if (bufer.Period > PERIOD)
             fL.push_back(bufer);
     }
-    sortPeriod(fL);
+    sort(fL, '5');
     return fL;
 }
 
@@ -492,7 +473,7 @@ int main9()
     cout << "Please, enter the name: ";
     string NAME;
     cin >> NAME;
-    fout << "a) " << endl;
+    fout << "a) NAME: " << NAME << endl;
     printListProduct(a9(L, NAME), "1465023");
 
     cout << endl; /// b)
@@ -518,7 +499,7 @@ int main9()
     cout << "Please, enter the price: ";
     double PRICE;
     cin >> PRICE;
-    fout << "d) " << PRICE << endl;
+    fout << "d) NAME: " << NAME << "; PRICE: " << PRICE << endl;
     printListProduct(d9(L, NAME, PRICE), "1465023");
 
     cout << endl; /// e)
@@ -535,8 +516,11 @@ int main9()
     cout << "Please, enter the period of storage: ";
     int PERIOD;
     cin >> PERIOD;
-    fout << "f) " << endl;
+    fout << "f) PERIOD: " << PERIOD << endl;
     printListProduct(f9(L, PERIOD), "561023");
+
+    fin.close();
+    fout.close();
     return 0;
 }
 

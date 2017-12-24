@@ -10,15 +10,21 @@
 #include "N_6_PonyavinD.cpp"
 #include "N_7_PonyavinD.cpp"
 #include "N_8_PonyavinD.cpp"
+#include "N_9_PonyavinD.cpp"
+#include "N_10_PonyavinD.cpp"
+#include "N_11_PonyavinD.cpp"
+#include "N_12_PonyavinD.cpp"
 
 using namespace std;
 
 int main()
 {
+
     int number;
-    cout << "Please, enter the number of laboratory work (1 - 8)" << endl;
+
+    cout << "Please, enter the number of laboratory work (1 - 12)" << endl;
     cin >> number;
-    while (number < 1 || number > 8)
+    while (number < 1 || number > 12)
     {
         cout << "Incorrect number" << endl;
         cin >> number;
@@ -63,6 +69,26 @@ int main()
         case 8:
         {
             main8();
+            break;
+        }
+        case 9:
+        {
+            main9();
+            break;
+        }
+        case 10:
+        {
+            main10();
+            break;
+        }
+        case 11:
+        {
+            main11();
+            break;
+        }
+        case 12:
+        {
+            main12();
             break;
         }
     }
