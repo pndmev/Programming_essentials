@@ -46,17 +46,20 @@ void Array<T> :: insert (ArrayIterator <T> ai, T t)
         push_front(t);
     else
     {
-        ArrayIterator <T> it;
-        ArrayIterator <T> buferit;
-
-        for (it = begin(); it != ai; it++)
+        if (ai == end())
         {
-            buferit = it;
-            buferit++;
-            if (buferit == ai)
-                break;
+            ArrayIterator <T> it;
+            it = begin() + (size() - 1);
+            List.insert_after(it.it, t);
         }
-        List.insert_after(it.it, t);
+        else
+        {
+            List.insert_after(ai.it, t);
+            ArrayIterator <T> next(ai);
+            next++;
+            *next = *ai;
+            *ai = t;
+        }
     }
 }
 
@@ -68,15 +71,7 @@ void Array<T> :: erase (ArrayIterator <T> ai)
     else
     {
         ArrayIterator <T> it;
-        ArrayIterator <T> buferit;
-
-        for (it = begin(); it != ai; it++)
-        {
-            buferit = it;
-            buferit++;
-            if (buferit == ai)
-                break;
-        }
+        it = begin() + (distance(List.begin(), ai.it) - 1);
         List.erase_after(it.it);
     }
 }
@@ -90,6 +85,7 @@ class ArrayIterator
     public:
         ArrayIterator(){;};
         ArrayIterator(const typename forward_list <T> :: iterator &other){it = other;};
+        ArrayIterator(const ArrayIterator <T> &other){it = other.it;};
         bool operator != (ArrayIterator <T> other){return it != other.it;};
         bool operator == (ArrayIterator <T> other){return it == other.it;};
         T& operator * (){return *it;}
@@ -120,12 +116,18 @@ int main()
         A.push_back(bufer);
     }
     printArray(A);
-    cout << "Please, enter the number for inserting" << endl;
+    cout << "Please, enter the value for inserting" << endl;
     cin >> bufer;
     cout << "Please, enter the number of position for inserting" << endl;
     int position;
     cin >> position;
     A.insert(A.begin() + position, bufer);
+    printArray(A);
+    cout << "Please, enter the number of element for modification" << endl;
+    cin >> position;
+    cout << "Please, enter new value for this element" << endl;
+    cin >> bufer;
+    A[position] = bufer;
     printArray(A);
     cout << "Please, enter the number of position for deleting" << endl;
     cin >> position;
